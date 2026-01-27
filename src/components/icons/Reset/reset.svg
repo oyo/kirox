@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="200" height="200">
+<defs>
+<style>.b{fill:#404040;}</style>
+<linearGradient id="lin" gradientTransform="rotate(90)"><stop offset="0%" stop-color="#808080" /><stop offset="100%" stop-color="#404040" /></linearGradient>
+<linearGradient id="lina" gradientTransform="rotate(90)"><stop offset="0%" stop-color="#ffffcc" /><stop offset="100%" stop-color="#dddd44" /></linearGradient>
+<radialGradient id="rad"><stop offset="0%" stop-color="#ffffff" /><stop offset="95%" stop-color="#808080" /></radialGradient>
+</defs>
+<g transform="translate(25,25)">
+  <rect class="b" x="-25" y="-25" width="50" height="50" rx="8" ry="8"/>
+  <rect style="fill:url(#lin);" x="-24" y="-24" width="48" height="34" rx="8" ry="8"/>
+  <ellipse style="fill:url(#rad);" cx="-10" cy="-19" rx="12" ry="4" />
+  <ellipse style="fill:url(#rad);" cx="10" cy="-20" rx="10" ry="3" />
+</g>
+<g transform="translate(3,3),scale(0.28)">
+  <path style="fill:url(#lina);"
+    d="M 93,23
+      a 60 60 0 1 1 -50,10
+      l -10,-10
+      l 40 0
+      l 0 40
+      l -10 -10
+      a 35 35 0 1 0 30,-5
+      z" />
+  </g>
+</svg>

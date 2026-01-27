@@ -1,0 +1,44 @@
+{
+  "name": "kirox",
+  "version": "0.0.1",
+  "description": "A collection of free web based games, puzzles and apps",
+  "author": "Martin Rohrmeier <roryphant@gmail.com> (oyo)",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oyo/kirox.git"
+  },
+  "keywords": [
+    "free",
+    "online",
+    "games",
+    "puzzles",
+    "kids",
+    "learning",
+    "typescript",
+    "javascript"
+  ],
+  "devDependencies": {
+    "husky": ">=7",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.8.1",
+    "typescript": "~5.9.3",
+    "vite": "^7.2.4",
+    "vite-tsconfig-paths": "^6.0.5",
+    "vitest": "^4.0.18"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,css,md,json,xml,yml,yaml,html}": [
+      "prettier --write"
+    ]
+  },
+  "scripts": {
+    "prepare": "husky",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "pretty": "prettier . --write",
+    "test": "vitest"
+  }
+}

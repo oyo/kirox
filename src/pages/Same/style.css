@@ -1,0 +1,33 @@
+.same {
+  aspect-ratio: 1 / 1;
+  max-width: 100vh;
+  max-height: 100vw;
+  line-height: 0;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+}
+
+.same img {
+  max-width: 6vh;
+  max-height: 6vw;
+}
+
+.ui {
+  position: fixed;
+  right: 1vw;
+  top: 1vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.ui img {
+  width: 10vw;
+  height: 10vw;
+  max-width: 100px;
+  max-height: 100px;
+  min-width: 50px;
+  min-height: 50px;
+}

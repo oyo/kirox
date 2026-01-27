@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="3 3 45 45" width="200" height="200">
+<defs>
+<style>.b{fill:#008800;}</style>
+</defs>
+<g transform="scale(1)">
+  <path class="b"
+    d="M 5,31
+      a 20 20 0 0 1 12,15
+      l 5 -1
+      a 60 60 0 0 1 25,-40
+      a 50 50 0 0 0 -29.5,28
+      a 15 15 0 0 0 -6,-7
+      z" />
+  </g>
+
+</svg>
