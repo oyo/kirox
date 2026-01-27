@@ -44,6 +44,9 @@ jobs:
         if: ${{ github.ref_name != steps.npm_tag.outputs.current_version }}
         run: echo "GIT ${{ github.ref_name }} != NPM ${{ steps.npm_tag.outputs.current_version }}" && exit 1
 
+      - name: Install Dependencies
+        run: yarn
+
       - name: Build Library
         run: yarn build
 
