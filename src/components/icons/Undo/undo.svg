@@ -2,15 +2,15 @@
 <defs>
 <linearGradient id="lina" gradientTransform="rotate(90)"><stop offset="0%" stop-color="#ffffcc" /><stop offset="100%" stop-color="#dddd44" /></linearGradient>
 </defs>
-<g transform="translate(3,3),scale(0.28)">
-  <path style="fill:url(#lina);"
-    d="M 93,23
-      a 60 60 0 1 1 -50,10
-      l -10,-10
-      l 40 0
-      l 0 40
+<g>
+  <path style="fill:url(#lina)"
+    d="M 43,40
+      a 25 15 0 0 0 -28,-15
+      l 0 5
       l -10 -10
-      a 35 35 0 1 0 30,-5
+      l 10 -10
+      l 0 5
+      a 27 20 0 0 1 28,25
       z" />
   </g>
 </svg>

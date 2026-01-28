@@ -9,7 +9,7 @@
       location.replace(
         `${base}?page=${location.pathname
           .split('/')
-          .slice(3)
+          .slice(2)
           .join('/')}${location.search.replace(/^\?/, '&')}${location.hash}`
       )
     </script>

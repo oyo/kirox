@@ -8,6 +8,7 @@ import {
   type ActionListener,
 } from 'types/events'
 import { Reset } from 'components/icons/Reset'
+import { Undo } from 'components/icons/Undo'
 
 export class SameUI extends Viewable implements Action {
   listener: ActionListener[]
@@ -15,11 +16,22 @@ export class SameUI extends Viewable implements Action {
   constructor() {
     super(N('div', undefined, { class: 'ui' }))
     this.getView().appendChild(
+      addEvents(N('img', undefined, { src: Undo(Config.COLOR.ORANGE) }), {
+        click: this.handleUndo.bind(this),
+      })
+    )
+    this.getView().appendChild(
       addEvents(N('img', undefined, { src: Reset(Config.COLOR.ORANGE) }), {
         click: this.handleReset.bind(this),
       })
     )
     this.listener = []
+  }
+
+  handleUndo() {
+    this.fireAction({
+      type: ActionType.UNDO,
+    })
   }
 
   handleReset() {

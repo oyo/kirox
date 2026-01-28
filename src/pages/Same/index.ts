@@ -37,6 +37,9 @@ export class Same implements ModelListener, ActionListener {
       case ActionType.TAP:
         detail.data && this.model.tap(detail.data)
         break
+      case ActionType.UNDO:
+        this.model.undo()
+        break
       case ActionType.RESET_APP:
         this.model.reset()
         break

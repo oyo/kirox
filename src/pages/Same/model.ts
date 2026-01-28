@@ -6,6 +6,7 @@ import {
   type NumberGridDefinition,
 } from 'types/global'
 import {
+  copy,
   createNumberGrid,
   createRandomNumberGrid,
   getItemAt,
@@ -16,15 +17,23 @@ import type { Model, ModelListener } from 'types/events'
 export class SameModel implements Model {
   definition: NumberGridDefinition | string
   grid: Grid<number>
+  history: Grid<number>[]
   listener: ModelListener[]
 
   constructor(definition: NumberGridDefinition | string) {
     this.definition = definition
     this.listener = []
+    this.history = []
     this.grid = []
   }
 
+  store() {
+    if (this.grid.length > 0) this.history.push(copy(this.grid))
+    this.history = this.history.slice(-1000)
+  }
+
   reset() {
+    this.store()
     this.grid =
       typeof this.definition === 'string'
         ? createNumberGrid(this.definition as string)
@@ -33,7 +42,14 @@ export class SameModel implements Model {
     return this.grid
   }
 
+  undo() {
+    if (this.history.length === 0) return
+    this.grid = this.history.pop()!
+    this.fireModelChanged()
+  }
+
   tap(coord: Coord) {
+    this.store()
     const g = this.grid
     const same = new Set<GridItem<number>>()
     const check = (item: GridItem<number>, value: number): boolean =>
@@ -55,6 +71,7 @@ export class SameModel implements Model {
       .map((r) => r.filter((item) => item.id !== -1))
       .filter((r) => r.length > 0)
       .map((r, y) => r.map((item, x) => ((item.coord.y = y), (item.coord.x = x), item)))
+
     this.fireModelChanged()
   }
 

@@ -2,6 +2,7 @@ import type { Coord } from 'types/global'
 
 export interface Model {
   reset: () => void
+  undo: () => void
   addModelListener: (listener: ModelListener) => Model
   fireModelChanged: (model: Model) => void
 }
@@ -20,6 +21,7 @@ export const ActionType = {
   OPEN_APP: 1,
   RESET_APP: 2,
   TAP: 3,
+  UNDO: 4,
 }
 
 export interface View {
