@@ -9,7 +9,7 @@ import {
   type ModelListener,
 } from 'types/events'
 import { GameUI } from '../../components/ui/GameUI'
-import type { Viewable } from 'util/ui'
+import { N, Viewable } from 'util/ui'
 import { Overlay } from 'components/ui/Overlay'
 
 const DefaultDefinition = {
@@ -17,20 +17,22 @@ const DefaultDefinition = {
   maxValue: 3,
 }
 
-export class Same implements ModelListener, ActionListener {
-  model: SameModel
-  view: SameView
-  ui: GameUI
+export class Same extends Viewable implements ModelListener, ActionListener {
+  protected model: SameModel
+  protected output: SameView
+  protected ui: GameUI
 
-  constructor(app: Viewable, definition: NumberGridDefinition = DefaultDefinition) {
-    this.view = new SameView().appendTo(app).addActionListener(this)
+  constructor(definition: NumberGridDefinition = DefaultDefinition) {
+    super()
+    this.view = N('div', null, { class: 'same' })
+    this.output = new SameView().addActionListener(this).appendTo(this)
+    this.ui = new GameUI().addActionListener(this).appendTo(this)
     this.model = new SameModel(definition).addModelListener(this)
-    this.ui = new GameUI().addActionListener(this).appendTo(app)
     this.model.reset()
   }
 
   modelChanged(model: Model) {
-    this.view.render(model)
+    this.output.render(model)
   }
 
   modelFinished(_: Model, status: number) {

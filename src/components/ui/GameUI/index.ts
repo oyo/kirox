@@ -9,21 +9,27 @@ import {
 } from 'types/events'
 import { Reset } from 'components/icons/Reset'
 import { Undo } from 'components/icons/Undo'
+import { Home } from 'components/icons/Home'
 
 export class GameUI extends Viewable implements Action {
   listener: ActionListener[]
 
   constructor() {
-    super(N('div', undefined, { class: 'ui' }))
-    this.getView().appendChild(
-      addEvents(N('img', undefined, { src: Undo(Config.COLOR.ORANGE) }), {
-        click: this.handleUndo.bind(this),
-      })
-    )
-    this.getView().appendChild(
-      addEvents(N('img', undefined, { src: Reset(Config.COLOR.ORANGE) }), {
-        click: this.handleReset.bind(this),
-      })
+    super()
+    this.view = N(
+      'div',
+      [
+        addEvents(N('img', undefined, { src: Undo(Config.COLOR.ORANGE) }), {
+          click: this.handleUndo.bind(this),
+        }),
+        addEvents(N('img', undefined, { src: Reset(Config.COLOR.ORANGE) }), {
+          click: this.handleReset.bind(this),
+        }),
+        addEvents(N('img', undefined, { src: Home(Config.COLOR.ORANGE) }), {
+          click: this.handleExit.bind(this),
+        }),
+      ],
+      { class: 'ui' }
     )
     this.listener = []
   }
@@ -38,6 +44,13 @@ export class GameUI extends Viewable implements Action {
     this.fireAction({
       type: ActionType.RESET_APP,
     })
+  }
+
+  handleExit() {
+    this.fireAction({
+      type: ActionType.EXIT,
+    })
+    location.replace('./?page=home')
   }
 
   addActionListener(l: ActionListener) {

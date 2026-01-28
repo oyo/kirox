@@ -33,7 +33,8 @@ export class SameView extends Viewable implements Action, View {
   listener: ActionListener[]
 
   constructor() {
-    super(N('div', undefined, { class: 'view same' }))
+    super()
+    this.view = N('div', undefined, { class: 'same-view' })
     this.listener = []
   }
 

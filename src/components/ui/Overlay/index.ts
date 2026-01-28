@@ -6,7 +6,8 @@ export class Overlay extends Viewable {
   static instance: Overlay = new Overlay()
 
   constructor() {
-    super(N('div', undefined, { class: 'overlay' }))
+    super()
+    this.view = N('div', undefined, { class: 'overlay' })
   }
 
   static showFinished(status: number) {

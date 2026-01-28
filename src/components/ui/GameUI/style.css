@@ -8,6 +8,7 @@
 }
 
 .ui img {
+  cursor: pointer;
   margin: 0.2vw;
   width: 10vw;
   height: 10vw;

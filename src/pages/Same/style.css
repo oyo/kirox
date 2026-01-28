@@ -1,4 +1,4 @@
-.same {
+.same-view {
   max-width: 100vh;
   max-height: 100vw;
   line-height: 0;
@@ -8,12 +8,12 @@
   align-items: flex-end;
 }
 
-.same .column {
+.same-view .column {
   display: flex;
   flex-direction: column-reverse;
 }
 
-.same img {
+.same-view img {
   max-width: 12vh;
   max-height: 12vw;
 }

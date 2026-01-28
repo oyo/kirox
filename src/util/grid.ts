@@ -11,6 +11,9 @@ export const border = <T>(grid: Grid<T>, value?: T) => [
 export const trim = (grid: Grid<any>) =>
   grid.slice(1, grid.length - 1).map((r) => r.slice(1, r.length - 1))
 
+export const transpose = (grid: Grid<any>) =>
+  filterEmpty(grid[0].map((_, c) => grid.map((r) => r[c])))
+
 export const createNumberGrid = (input: string): Grid<number> =>
   input.split('\n').map((l, y) =>
     l.split('').map((n, x) => ({

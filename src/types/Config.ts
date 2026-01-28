@@ -1,4 +1,28 @@
+import { Home } from 'pages/Home'
+import { Same } from 'pages/Same'
+import { SamePreview } from 'pages/Same/preview'
+import type { Viewable } from 'util/ui'
+
+type AppType = {
+  run: () => Viewable
+  preview?: () => Viewable
+}
+
+const pages: Record<string, AppType> = {
+  home: {
+    run: () => new Home(),
+  },
+  same: {
+    run: () => new Same(),
+    preview: () => new SamePreview(),
+  },
+}
+
 export default {
+  CONTEXT: '/kirox/',
+
+  pages,
+
   COLOR: {
     BLACK: ['000000', '505050'],
     GRAPHITE: ['202020', '686868'],

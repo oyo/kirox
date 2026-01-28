@@ -80,9 +80,13 @@ export function debounce(func, timeout = 250) {
   }
 }
 
-export /*abstract*/ class Viewable {
-  constructor(view) {
-    this.view = typeof view === 'string' ? document.querySelector(view) : view
+export abstract class Viewable {
+  view: Element = N('pre')
+
+  static from(view: string | Element) {
+    const element = new (class extends Viewable {})()
+    element.view = typeof view === 'string' ? document.querySelector(view)! : view
+    return element
   }
 
   getView() {
@@ -104,7 +108,7 @@ export /*abstract*/ class Viewable {
     return this
   }
 
-  remove() {
-    remove(this.getView())
+  remove(child?: Element | Viewable) {
+    child ? remove(domItem(child)) : remove(this.getView())
   }
 }

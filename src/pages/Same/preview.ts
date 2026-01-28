@@ -1,41 +1,16 @@
+import { Same } from '.'
 import { SameModel } from './model'
-import { SameView } from './view'
-import {
-  ActionType,
-  type ActionDetail,
-  type Model,
-  type ModelListener,
-} from 'types/events'
-import type { Viewable } from 'util/ui'
+import { ActionType, type ActionDetail, type ModelListener } from 'types/events'
 
-export const previewGrid =
-  //`001
-  //200002
-  //22110
-  //1002`
-
-  //`011102
-  //111200
-  //200211
-  //100112`
-
-  `011010
+export const previewGrid = `011210
 010022
-201122
+220122
 100102`
 
 const actions: ActionDetail[] = [
   {
     type: ActionType.TAP,
-    data: { x: 2, y: 3 },
-  },
-  {
-    type: ActionType.TAP,
-    data: { x: 3, y: 0 },
-  },
-  {
-    type: ActionType.TAP,
-    data: { x: 2, y: 0 },
+    data: { x: 3, y: 1 },
   },
   {
     type: ActionType.TAP,
@@ -46,23 +21,35 @@ const actions: ActionDetail[] = [
     data: { x: 0, y: 0 },
   },
   {
+    type: ActionType.TAP,
+    data: { x: 0, y: 0 },
+  },
+  {
+    type: ActionType.TAP,
+    data: { x: 0, y: 0 },
+  },
+  {
+    type: ActionType.TAP,
+    data: { x: 0, y: 0 },
+  },
+  {
     type: ActionType.RESET_APP,
   },
 ]
 
-export class SamePreview implements ModelListener {
-  model: SameModel
-  view: SameView
+export class SamePreview extends Same implements ModelListener {
+  timer: number = 0
 
-  constructor(app: Viewable) {
-    this.view = new SameView().appendTo(app)
+  constructor() {
+    super()
+    this.remove(this.ui)
     this.model = new SameModel(previewGrid).addModelListener(this)
     this.model.reset()
     this.play()
   }
 
-  modelChanged(model: Model) {
-    this.view.render(model)
+  modelFinished() {
+    this.model.reset()
   }
 
   action(detail: ActionDetail) {
@@ -77,10 +64,17 @@ export class SamePreview implements ModelListener {
   }
 
   play() {
-    setInterval(() => {
+    this.stop()
+    this.timer = setInterval(() => {
       const a = actions.shift()!
       this.action(a)
       actions.push(a)
-    }, 2000)
+    }, 1000)
+    return this
+  }
+
+  stop() {
+    if (this.timer) clearInterval(this.timer)
+    return this
   }
 }

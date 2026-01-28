@@ -12,6 +12,7 @@ import {
   filterEmpty,
   getItemAt,
   replaceItems,
+  transpose,
 } from 'util/grid'
 import type { Model, ModelListener } from 'types/events'
 
@@ -37,7 +38,7 @@ export class SameModel implements Model {
     this.store()
     this.grid =
       typeof this.definition === 'string'
-        ? createNumberGrid(this.definition as string)
+        ? transpose(createNumberGrid(this.definition as string))
         : createRandomNumberGrid(this.definition as NumberGridDefinition)
     this.fireModelChanged()
     return this.grid
