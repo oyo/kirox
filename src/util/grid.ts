@@ -48,6 +48,12 @@ export const replaceItems = (
   newItem: GridItem<any>
 ) => items.map((item) => (grid[item.coord.y][item.coord.x] = newItem))
 
+export const filterEmpty = (grid: Grid<any>) =>
+  grid
+    .map((r) => r.filter((item) => item.id !== -1))
+    .filter((r) => r.length > 0)
+    .map((r, y) => r.map((item, x) => ((item.coord.y = y), (item.coord.x = x), item)))
+
 export const debug = (grid: Grid<any>) =>
   grid
     .map((r) => r.map((item) => (item.id === -1 ? ' ' : item.value)).join(' '))

@@ -1,0 +1,18 @@
+.ui {
+  position: fixed;
+  right: 0.2vw;
+  top: 0.2vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.ui img {
+  margin: 0.2vw;
+  width: 10vw;
+  height: 10vw;
+  max-width: 100px;
+  max-height: 100px;
+  min-width: 50px;
+  min-height: 50px;
+}

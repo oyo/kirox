@@ -10,7 +10,7 @@ import {
 import { Reset } from 'components/icons/Reset'
 import { Undo } from 'components/icons/Undo'
 
-export class SameUI extends Viewable implements Action {
+export class GameUI extends Viewable implements Action {
   listener: ActionListener[]
 
   constructor() {

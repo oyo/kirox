@@ -1,0 +1,32 @@
+.overlay {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  right: 0;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+}
+
+.overlay .finished {
+  margin: auto;
+  width: 60vw;
+  height: 60vh;
+  max-height: 100vw;
+  max-width: 100vh;
+  animation-name: shrink;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in;
+}
+
+@keyframes shrink {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0);
+  }
+}

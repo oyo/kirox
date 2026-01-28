@@ -8,8 +8,9 @@ import {
   type Model,
   type ModelListener,
 } from 'types/events'
-import { SameUI } from './ui'
+import { GameUI } from '../../components/ui/GameUI'
 import type { Viewable } from 'util/ui'
+import { Overlay } from 'components/ui/Overlay'
 
 const DefaultDefinition = {
   size: { dx: 8, dy: 8 },
@@ -19,17 +20,21 @@ const DefaultDefinition = {
 export class Same implements ModelListener, ActionListener {
   model: SameModel
   view: SameView
-  ui: SameUI
+  ui: GameUI
 
   constructor(app: Viewable, definition: NumberGridDefinition = DefaultDefinition) {
     this.view = new SameView().appendTo(app).addActionListener(this)
     this.model = new SameModel(definition).addModelListener(this)
-    this.ui = new SameUI().addActionListener(this).appendTo(app)
+    this.ui = new GameUI().addActionListener(this).appendTo(app)
     this.model.reset()
   }
 
   modelChanged(model: Model) {
     this.view.render(model)
+  }
+
+  modelFinished(_: Model, status: number) {
+    Overlay.showFinished(status)
   }
 
   action(detail: ActionDetail) {

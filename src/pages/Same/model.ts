@@ -9,6 +9,7 @@ import {
   copy,
   createNumberGrid,
   createRandomNumberGrid,
+  filterEmpty,
   getItemAt,
   replaceItems,
 } from 'util/grid'
@@ -44,12 +45,13 @@ export class SameModel implements Model {
 
   undo() {
     if (this.history.length === 0) return
-    this.grid = this.history.pop()!
+    this.grid = this.history
+      .pop()!
+      .map((r, y) => r.map((item, x) => ((item.coord.y = y), (item.coord.x = x), item)))
     this.fireModelChanged()
   }
 
   tap(coord: Coord) {
-    this.store()
     const g = this.grid
     const same = new Set<GridItem<number>>()
     const check = (item: GridItem<number>, value: number): boolean =>
@@ -62,17 +64,31 @@ export class SameModel implements Model {
       check(getItemAt(g, item.coord.y, item.coord.x + 1), value))
     const item = getItemAt(g, coord.y, coord.x)
     check(item, item.value)
-    if (same.size > 1) replaceItems(g, [...same], NONE)
-    return this.compact()
+    if (same.size > 1) {
+      this.store()
+      replaceItems(this.grid, [...same], NONE)
+      this.grid = filterEmpty(this.grid)
+      this.fireModelChanged()
+      this.checkMoves()
+    }
   }
 
-  compact() {
-    this.grid = this.grid
-      .map((r) => r.filter((item) => item.id !== -1))
-      .filter((r) => r.length > 0)
-      .map((r, y) => r.map((item, x) => ((item.coord.y = y), (item.coord.x = x), item)))
-
-    this.fireModelChanged()
+  checkMoves() {
+    const g = this.grid
+    if (g.length === 0) {
+      this.fireModelFinished(0)
+      return this
+    }
+    let noNeighbor = true
+    for (let y = 0; y < g.length && noNeighbor; y++) {
+      for (let x = 0; x < g[y].length && noNeighbor; x++) {
+        const v = getItemAt(g, y, x).value
+        if (v === getItemAt(g, y, x + 1).value || v === getItemAt(g, y + 1, x).value) {
+          noNeighbor = false
+        }
+      }
+    }
+    if (noNeighbor) this.fireModelFinished(1)
   }
 
   addModelListener(l: ModelListener) {
@@ -82,5 +98,9 @@ export class SameModel implements Model {
 
   fireModelChanged() {
     this.listener.forEach((l) => l.modelChanged(this))
+  }
+
+  fireModelFinished(status: number) {
+    this.listener.forEach((l) => l.modelFinished(this, status))
   }
 }
