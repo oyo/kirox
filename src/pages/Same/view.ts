@@ -8,7 +8,7 @@ import {
   type ActionListener,
   type Model,
   type View,
-} from 'util/events'
+} from 'types/events'
 import type { SameModel } from './model'
 
 const COLOR = {
@@ -52,7 +52,10 @@ export class SameView extends Viewable implements Action, View {
                 click: this.handleTap.bind(this),
               }
             )
-          )
+          ),
+          {
+            class: 'column',
+          }
         )
       )
     )

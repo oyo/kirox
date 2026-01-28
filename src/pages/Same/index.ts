@@ -3,17 +3,16 @@ import { SameModel } from './model'
 import { SameView } from './view'
 import {
   ActionType,
-  type Action,
   type ActionDetail,
   type ActionListener,
   type Model,
   type ModelListener,
-} from 'util/events'
+} from 'types/events'
 import { SameUI } from './ui'
 import type { Viewable } from 'util/ui'
 
 const DefaultDefinition = {
-  size: { dx: 16, dy: 16 },
+  size: { dx: 8, dy: 8 },
   maxValue: 3,
 }
 

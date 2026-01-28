@@ -5,7 +5,7 @@ import {
   type Action,
   type ActionDetail,
   type ActionListener,
-} from 'util/events'
+} from 'types/events'
 
 export class PreviewUI extends Viewable implements Action {
   listener: ActionListener[]

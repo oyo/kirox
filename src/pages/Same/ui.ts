@@ -6,7 +6,7 @@ import {
   type Action,
   type ActionDetail,
   type ActionListener,
-} from 'util/events'
+} from 'types/events'
 import { Reset } from 'components/icons/Reset'
 
 export class SameUI extends Viewable implements Action {

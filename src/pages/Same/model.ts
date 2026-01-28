@@ -11,7 +11,7 @@ import {
   getItemAt,
   replaceItems,
 } from 'util/grid'
-import type { Model, ModelListener } from 'util/events'
+import type { Model, ModelListener } from 'types/events'
 
 export class SameModel implements Model {
   definition: NumberGridDefinition | string

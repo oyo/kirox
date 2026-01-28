@@ -5,7 +5,7 @@ import {
   type ActionDetail,
   type Model,
   type ModelListener,
-} from 'util/events'
+} from 'types/events'
 import type { Viewable } from 'util/ui'
 
 export const previewGrid =

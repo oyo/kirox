@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="200" height="200">
+<defs>
+<style>.b{fill:#0066aa;}.t{fill:#00cc00;}</style>
+<linearGradient id="lin" gradientTransform="rotate(90)"><stop offset="0%" stop-color="#40a0f0" /><stop offset="100%" stop-color="#0066aa" /></linearGradient>
+<linearGradient id='lina' gradientTransform='rotate(90)'><stop offset='0%' stop-color='#ffffcc' /><stop offset='100%' stop-color='#dddd44' /></linearGradient>
+<radialGradient id="rad"><stop offset="0%" stop-color="#ffffff" /><stop offset="95%" stop-color="#40a0f0" /></radialGradient>
+</defs>
+<g transform="translate(25,25)">
+<circle class="b" r="25" />
+<ellipse style="fill:url(#lin);" cy="-7" rx="22" ry="18"/>
+<g transform="rotate(-20)"><ellipse style="fill:url(#rad);" cy="-19" rx="12" ry="6" /></g>
+<g transform="rotate(40)"><ellipse style="fill:url(#rad);" cy="-22" rx="6" ry="3" /></g>
+  <path class="t"
+    d="M -20,3
+      a 20 20 0 0 1 12,15
+      l 5 -1
+      a 60 60 0 0 1 25,-40
+      a 50 50 0 0 0 -29.5,28
+      a 15 15 0 0 0 -6,-7
+      z" />
+</g>
+</svg>
