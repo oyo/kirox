@@ -43,6 +43,7 @@ export class SamePreview extends Same implements ModelListener {
   constructor() {
     super()
     this.remove(this.ui)
+    this.getView().classList.add('same-preview')
     this.model = new SameModel(previewGrid).addModelListener(this)
     this.model.reset()
     this.play()

@@ -1,11 +1,7 @@
 .same-view {
   max-width: 100vh;
   max-height: 100vw;
-  line-height: 0;
-  margin: auto;
   display: flex;
-  flex-direction: row;
-  align-items: flex-end;
 }
 
 .same-view .column {
@@ -14,6 +10,11 @@
 }
 
 .same-view img {
-  max-width: 12vh;
-  max-height: 12vw;
+  max-width: 12.5vh;
+  max-height: 12.5vw;
+}
+
+.same-preview img {
+  max-width: 8vh;
+  max-height: 8vw;
 }

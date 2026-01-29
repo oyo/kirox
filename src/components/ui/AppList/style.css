@@ -7,12 +7,12 @@
 }
 
 .app-list li {
-  width: 76vw;
-  height: 52vw;
-  max-width: 76vh;
-  max-height: 52vh;
+  width: 54vw;
+  height: 38vw;
+  max-width: 54vh;
+  max-height: 38vh;
   background-color: #303030;
-  border-radius: 3vw;
+  border-radius: 2vw;
   display: flex;
   justify-content: center;
   place-items: center;

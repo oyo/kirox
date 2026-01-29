@@ -1,4 +1,4 @@
-import { rebase } from 'util/app'
+import { rebase } from 'util/navigate'
 import { App } from 'components/App'
 
 rebase()

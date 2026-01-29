@@ -50,7 +50,7 @@ export class GameUI extends Viewable implements Action {
     this.fireAction({
       type: ActionType.EXIT,
     })
-    location.replace('./?page=home')
+    location.replace('./')
   }
 
   addActionListener(l: ActionListener) {

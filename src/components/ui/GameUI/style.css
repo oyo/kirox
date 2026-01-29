@@ -3,8 +3,6 @@
   right: 0.2vw;
   top: 0.2vw;
   display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
 }
 
 .ui img {
@@ -14,6 +12,18 @@
   height: 10vw;
   max-width: 100px;
   max-height: 100px;
-  min-width: 50px;
-  min-height: 50px;
+  min-width: 80px;
+  min-height: 80px;
+}
+
+@media (orientation: landscape) {
+  .ui {
+    flex-direction: column-reverse;
+  }
+}
+
+@media (orientation: portrait) {
+  .ui {
+    flex-direction: row;
+  }
 }
