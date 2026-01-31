@@ -1,4 +1,4 @@
-import type { Coord } from 'types/global'
+import type { Coord } from 'types/grid'
 
 export interface Model {
   reset: () => void
@@ -19,7 +19,6 @@ export interface ActionDetail {
 }
 
 export const ActionType = {
-  RUN_PREVIEW: 0,
   OPEN_APP: 1,
   RESET_APP: 2,
   TAP: 3,
@@ -28,6 +27,10 @@ export const ActionType = {
   EXIT: 6,
   SUCCESS: 7,
   FAIL: 8,
+  DRAG: 9,
+  RUN_PREVIEW: 10,
+  SOLVE: 11,
+  HINT: 12,
 }
 
 export interface View {

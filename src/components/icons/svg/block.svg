@@ -6,7 +6,7 @@
 </defs>
 <g transform="translate(25,25)">
 <rect class="b" x="-25" y="-25" width="50" height="50" rx="8" ry="8"/>
-<rect style="fill:url(#lin);" x="-24" y="-24" width="48" height="34" rx="8" ry="8"/>
+<rect style="fill:url(#lin);" x="-24.5" y="-24.5" width="49" height="34" rx="7.5" ry="7.5"/>
 <ellipse style="fill:url(#rad);" cx="-10" cy="-19" rx="12" ry="4" />
 <ellipse style="fill:url(#rad);" cx="10" cy="-20" rx="10" ry="3" />
 </g>

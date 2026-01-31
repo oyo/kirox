@@ -4,7 +4,7 @@ import {
   type Grid,
   type GridItem,
   type NumberGridDefinition,
-} from 'types/global'
+} from 'types/grid'
 import {
   copy,
   createNumberGrid,
@@ -18,15 +18,12 @@ import type { Model, ModelListener } from 'types/events'
 
 export class SameModel implements Model {
   definition: NumberGridDefinition | string
-  grid: Grid<number>
-  history: Grid<number>[]
-  listener: ModelListener[]
+  grid: Grid<number> = []
+  history: Grid<number>[] = []
+  listener: ModelListener[] = []
 
   constructor(definition: NumberGridDefinition | string) {
     this.definition = definition
-    this.listener = []
-    this.history = []
-    this.grid = []
   }
 
   store() {

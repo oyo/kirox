@@ -17,7 +17,7 @@ const createURL = (pageName: string) =>
 
 const contextRebase = () =>
   location.pathname.length > Config.CONTEXT.length &&
-  location.replace(createURL(location.pathname))
+  location.replace(createURL(location.pathname.split('/')[2]))
 
 const argRebase = () => {
   if (pageArg === null) return

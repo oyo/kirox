@@ -1,5 +1,5 @@
 import { addEvents, json, N, Viewable } from 'util/ui'
-import { Block } from 'components/icons/Block'
+import { Block } from 'components/icons/Shapes'
 import './style.css'
 import {
   ActionType,
@@ -30,12 +30,11 @@ const colors = [
 ]
 
 export class SameView extends Viewable implements Action, View {
-  listener: ActionListener[]
+  listener: ActionListener[] = []
 
   constructor() {
     super()
     this.view = N('div', undefined, { class: 'same-view' })
-    this.listener = []
   }
 
   render(model: Model) {
@@ -63,7 +62,7 @@ export class SameView extends Viewable implements Action, View {
     return this
   }
 
-  handleTap(e: MouseEvent) {
+  handleTap(e: Event) {
     this.fireAction({
       type: ActionType.TAP,
       data: JSON.parse((e.target! as HTMLImageElement).getAttribute('coord') ?? ''),

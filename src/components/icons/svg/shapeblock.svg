@@ -1,0 +1,2 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="200" height="200">
+<defs><linearGradient id="lina" gradientTransform="rotate(90)"><stop offset="0%" stop-color="#ffffcc" /><stop offset="100%" stop-color="#dddd44" /></linearGradient></defs><path style="fill:url(#lina);" d="M25,5l20,40l-40,0z"/></svg>

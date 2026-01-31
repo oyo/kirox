@@ -1,6 +1,6 @@
 import type { NumberGridDefinition } from 'types/grid'
-import { SameModel } from './model'
-import { SameView } from './view'
+import { WordMixModel } from './model'
+import { WordMixView } from './view'
 import {
   ActionType,
   type ActionDetail,
@@ -11,26 +11,29 @@ import {
 import { GameUI, Show } from '../../components/ui/GameUI'
 import { N, Viewable } from 'util/ui'
 import { Overlay } from 'components/ui/Overlay'
+import type { WordData } from 'types/words'
+import { createList } from 'util/words'
 
-const DefaultDefinition = {
-  size: { dx: 8, dy: 8 },
-  maxValue: 3,
-}
-
-export class Same extends Viewable implements ModelListener, ActionListener {
-  protected model: SameModel
-  protected output: SameView
+export class WordMix extends Viewable implements ModelListener, ActionListener {
+  protected model: WordMixModel
+  protected output: WordMixView
   protected ui: GameUI
 
-  constructor(definition: NumberGridDefinition = DefaultDefinition) {
+  constructor() {
     super()
-    this.view = N('div', null, { class: 'same' })
-    this.output = new SameView().addActionListener(this).appendTo(this)
-    this.ui = new GameUI(Show.UNDO | Show.RESET | Show.HOME)
+    this.view = N('div', null, { class: 'wordmix' })
+    this.output = new WordMixView().addActionListener(this).appendTo(this)
+    this.ui = new GameUI(Show.UNDO | Show.REDO | Show.RESET | Show.HOME)
       .addActionListener(this)
       .appendTo(this)
-    this.model = new SameModel(definition).addModelListener(this)
-    this.model.reset()
+    this.model = new WordMixModel().addModelListener(this)
+    this.loadData()
+  }
+
+  async loadData() {
+    const response = await fetch('data/lang/de.json')
+    const data = (await response.json()) as WordData
+    this.model.setWords(createList(data))
   }
 
   modelChanged(model: Model) {
@@ -44,10 +47,8 @@ export class Same extends Viewable implements ModelListener, ActionListener {
   action(detail: ActionDetail) {
     switch (detail.type) {
       case ActionType.TAP:
-        detail.data && this.model.tap(detail.data)
         break
       case ActionType.UNDO:
-        this.model.undo()
         break
       case ActionType.RESET_APP:
         this.model.reset()

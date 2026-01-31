@@ -1,4 +1,4 @@
-import { NONE, type Grid, type GridItem, type NumberGridDefinition } from 'types/global'
+import { NONE, type Grid, type GridItem, type NumberGridDefinition } from 'types/grid'
 
 export const copy = (grid: Grid<any>) => grid.map((r) => [...r])
 

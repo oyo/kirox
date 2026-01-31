@@ -10,7 +10,7 @@
   display: flex;
 }
 
-.overlay .finished {
+.overlay > img {
   margin: auto;
   width: 60vw;
   height: 60vh;

@@ -1,5 +1,4 @@
-import Config from 'types/Config'
-import { addEvents, N, Viewable } from 'util/ui'
+import { N, Viewable } from 'util/ui'
 import './style.css'
 import {
   ActionType,
@@ -7,27 +6,27 @@ import {
   type ActionDetail,
   type ActionListener,
 } from 'types/events'
-import { Reset } from 'components/icons/Reset'
-import { Undo } from 'components/icons/Undo'
-import { Home } from 'components/icons/Home'
+import { Home, Redo, Reset, Undo } from 'components/icons/Shapes'
+
+export const Show: Record<string, number> = {
+  HOME: 1,
+  RESET: 2,
+  UNDO: 4,
+  REDO: 8,
+}
 
 export class GameUI extends Viewable implements Action {
   listener: ActionListener[]
 
-  constructor() {
+  constructor(show: number = 255) {
     super()
     this.view = N(
       'div',
       [
-        addEvents(N('img', undefined, { src: Undo(Config.COLOR.ORANGE) }), {
-          click: this.handleUndo.bind(this),
-        }),
-        addEvents(N('img', undefined, { src: Reset(Config.COLOR.ORANGE) }), {
-          click: this.handleReset.bind(this),
-        }),
-        addEvents(N('img', undefined, { src: Home(Config.COLOR.ORANGE) }), {
-          click: this.handleExit.bind(this),
-        }),
+        show & Show.UNDO ? Undo(this.handleUndo.bind(this)) : '',
+        show & Show.RESET ? Reset(this.handleReset.bind(this)) : '',
+        show & Show.REDO ? Redo(this.handleRedo.bind(this)) : '',
+        show & Show.HOME ? Home(this.handleHome.bind(this)) : '',
       ],
       { class: 'ui' }
     )
@@ -40,13 +39,19 @@ export class GameUI extends Viewable implements Action {
     })
   }
 
+  handleRedo() {
+    this.fireAction({
+      type: ActionType.REDO,
+    })
+  }
+
   handleReset() {
     this.fireAction({
       type: ActionType.RESET_APP,
     })
   }
 
-  handleExit() {
+  handleHome() {
     this.fireAction({
       type: ActionType.EXIT,
     })

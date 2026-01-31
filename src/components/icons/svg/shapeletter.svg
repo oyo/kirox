@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="200" height="200">
+<defs>
+<style>.t{font-family:sans-serif;font-weight:bold;font-size:42px;}</style>
+<linearGradient id="lina" gradientTransform="rotate(90)">
+<stop offset="0%" stop-color="#ffffcc" />
+<stop offset="100%" stop-color="#dddd44" />
+</linearGradient></defs>
+<g>
+<text class="t" x="50%" y="60%" dominant-baseline="middle" text-anchor="middle" style="fill:url(#lina);">A</text></g></svg>

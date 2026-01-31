@@ -1,6 +1,8 @@
 import { Home } from 'pages/Home'
 import { Same } from 'pages/Same'
 import { SamePreview } from 'pages/Same/preview'
+import { WordMix } from 'pages/WordMix'
+import { WordMixPreview } from 'pages/WordMix/preview'
 import type { Viewable } from 'util/ui'
 
 type AppType = {
@@ -15,6 +17,10 @@ const pages: Record<string, AppType> = {
   same: {
     run: () => new Same(),
     preview: () => new SamePreview(),
+  },
+  wordmix: {
+    run: () => new WordMix(),
+    preview: () => new WordMixPreview(),
   },
 }
 
@@ -31,7 +37,8 @@ export default {
     WHITE: ['c0c0c0', 'f0f0f0'],
     BLUE: ['1020a0', '2040d0'],
     SKY: ['1080e0', '20a0f0'],
-    GREEN: ['004000', '208020'],
+    GRASS: ['004000', '208020'],
+    GREEN: ['00a000', '40ff40'],
     NEON: ['60a000', '90e020'],
     RED: ['a01000', 'f04030'],
     WINE: ['600000', 'a03030'],

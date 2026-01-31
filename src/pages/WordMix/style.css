@@ -1,0 +1,15 @@
+.wordmix-view {
+  max-width: 100vh;
+  max-height: 100vw;
+  display: flex;
+}
+
+.wordmix-view img {
+  max-width: 12.5vh;
+  max-height: 12.5vw;
+}
+
+.wordmix-preview img {
+  max-width: 8vh;
+  max-height: 8vw;
+}

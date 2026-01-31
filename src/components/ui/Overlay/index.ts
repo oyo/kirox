@@ -1,4 +1,4 @@
-import { Okay } from 'components/icons/Okay'
+import { Fail, Success } from 'components/icons/Shapes'
 import { clear, N, Viewable } from 'util/ui'
 import './style.css'
 
@@ -11,10 +11,7 @@ export class Overlay extends Viewable {
   }
 
   static showFinished(status: number) {
-    const img = N('img', undefined, {
-      class: 'finished',
-      src: Okay(status === 0),
-    })
+    const img = status === 0 ? Success() : Fail()
     const v = this.instance.getView()
     clear(v)
     v.appendChild(img)

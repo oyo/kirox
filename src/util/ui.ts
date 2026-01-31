@@ -1,6 +1,6 @@
-const domItem = (p) => (p.hasOwnProperty('view') ? p.view : p)
+const domItem = (p: any) => (p.hasOwnProperty('view') ? p.view : p)
 
-export const isJSON = (o) => {
+export const isJSON = (o: any) => {
   try {
     return JSON.parse(o)
   } catch (_) {
@@ -8,7 +8,7 @@ export const isJSON = (o) => {
   }
 }
 
-export const json = (o) => {
+export const json = (o: any) => {
   try {
     return JSON.stringify(o, null, 2)
   } catch (e) {
@@ -17,20 +17,29 @@ export const json = (o) => {
   return o
 }
 
-export const append = (n, c) => {
+export const append = (n: Element, c: any) => {
   for (let cn of Array.isArray(c) ? c : [c]) {
+    const tc = typeof cn
     try {
-      let m = domItem(cn)
-      if (m) {
-        n.appendChild(m)
-        continue
+      switch (tc) {
+        case 'number':
+        case 'string':
+        case 'boolean':
+          n.appendChild(document.createTextNode(cn))
+          break
+        default:
+          let m = domItem(cn)
+          if (m) {
+            n.appendChild(m)
+            continue
+          }
+          m = String(cn)
+          if (m !== '[object Object]') {
+            n.appendChild(document.createTextNode(m))
+            continue
+          }
+          throw {}
       }
-      m = String(cn)
-      if (m !== '[object Object]') {
-        n.appendChild(document.createTextNode(m))
-        continue
-      }
-      throw e
     } catch (e) {
       const pre = document.createElement('pre')
       pre.appendChild(document.createTextNode(json(cn) ?? String(cn)))
@@ -40,11 +49,7 @@ export const append = (n, c) => {
   return n
 }
 
-export const N = (
-  tag: string,
-  c?: null | string | Element | Element[],
-  att?: Record<string, string>
-) => {
+export const N = (tag: string, c?: any, att?: Record<string, string>) => {
   const n = document.createElement(tag)
   if (att) for (let a of Object.keys(att)) n.setAttribute(a, att[a])
   if (typeof c === 'undefined' || c === null) return n
@@ -60,21 +65,21 @@ export const remove = (n: Element) => {
   }
 }
 
-export const clear = (n) => {
+export const clear = (n: Element | Viewable) => {
   const d = domItem(n)
   if (!d) return
   while (d.childNodes.length > 0) d.removeChild(d.firstChild)
   return n
 }
 
-export const addEvents = (node, evts) => {
+export const addEvents = (node: Element, evts: Record<string, (e: Event) => void>) => {
   Object.keys(evts).forEach((key) => node.addEventListener(key, evts[key]))
   return node
 }
 
-export function debounce(func, timeout = 250) {
-  let timer
-  return (...args) => {
+export function debounce(func: any, timeout = 250) {
+  let timer: number
+  return (...args: any[]) => {
     clearTimeout(timer)
     timer = setTimeout(() => func.apply(this, args), timeout)
   }
@@ -98,12 +103,12 @@ export abstract class Viewable {
     return this
   }
 
-  append(p) {
-    append(this.getView(), p)
+  append(n: any) {
+    append(this.getView(), n)
     return this
   }
 
-  appendTo(p) {
+  appendTo(p: Element | Viewable) {
     append(domItem(p), this.getView())
     return this
   }
