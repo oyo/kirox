@@ -18,7 +18,7 @@ export const replaceUmlaut = (word: string) =>
     })
     .replace(new RegExp('[' + Object.keys(umlMap).join('|') + ']', 'g'), (a) => umlMap[a])
 
-export const createList = (data: WordData): Word[] =>
+export const createList = (data: WordData[]): Word[] =>
   data.map((w: any) => ({
     word: (w[1] as string).replace(/\./g, ''),
     gen: w[0] as number,

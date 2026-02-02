@@ -6,13 +6,14 @@ import {
   type ActionDetail,
   type ActionListener,
 } from 'types/events'
-import { Home, Redo, Reset, Undo } from 'components/icons/Shapes'
+import { Hint, Home, Redo, Reset, Undo } from 'components/icons/Shapes'
 
 export const Show: Record<string, number> = {
   HOME: 1,
   RESET: 2,
-  UNDO: 4,
-  REDO: 8,
+  HINT: 4,
+  UNDO: 8,
+  REDO: 16,
 }
 
 export class GameUI extends Viewable implements Action {
@@ -25,6 +26,7 @@ export class GameUI extends Viewable implements Action {
       [
         show & Show.UNDO ? Undo(this.handleUndo.bind(this)) : '',
         show & Show.RESET ? Reset(this.handleReset.bind(this)) : '',
+        show & Show.HINT ? Hint(this.handleHint.bind(this)) : '',
         show & Show.REDO ? Redo(this.handleRedo.bind(this)) : '',
         show & Show.HOME ? Home(this.handleHome.bind(this)) : '',
       ],
@@ -48,6 +50,12 @@ export class GameUI extends Viewable implements Action {
   handleReset() {
     this.fireAction({
       type: ActionType.RESET_APP,
+    })
+  }
+
+  handleHint() {
+    this.fireAction({
+      type: ActionType.HINT,
     })
   }
 

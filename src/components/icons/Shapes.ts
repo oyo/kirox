@@ -63,6 +63,8 @@ export const Undo = (click: () => void) =>
   Button(Image(BlockShape(ShapePath.UNDO)), click)
 export const Redo = (click: () => void) =>
   Button(Image(BlockShape(ShapePath.REDO)), click)
+export const Hint = (click: () => void) =>
+  Button(Image(BlockShape(ShapePath.HINT)), click)
 
 export const Success = () => Image(Shape(ShapePath.OK, Config.COLOR.GREEN[1]))
 export const Fail = () => Image(Shape(ShapePath.NOK, Config.COLOR.RED[1]))

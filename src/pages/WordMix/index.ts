@@ -23,7 +23,7 @@ export class WordMix extends Viewable implements ModelListener, ActionListener {
     super()
     this.view = N('div', null, { class: 'wordmix' })
     this.output = new WordMixView().addActionListener(this).appendTo(this)
-    this.ui = new GameUI(Show.UNDO | Show.REDO | Show.RESET | Show.HOME)
+    this.ui = new GameUI(Show.UNDO | Show.REDO | Show.RESET | Show.HINT | Show.HOME)
       .addActionListener(this)
       .appendTo(this)
     this.model = new WordMixModel().addModelListener(this)
@@ -32,12 +32,12 @@ export class WordMix extends Viewable implements ModelListener, ActionListener {
 
   async loadData() {
     const response = await fetch('data/lang/de.json')
-    const data = (await response.json()) as WordData
+    const data = (await response.json()) as WordData[]
     this.model.setWords(createList(data))
   }
 
   modelChanged(model: Model) {
-    this.output.render(model)
+    this.output.render(model).arrangeCircle()
   }
 
   modelFinished(_: Model, status: number) {
@@ -46,12 +46,25 @@ export class WordMix extends Viewable implements ModelListener, ActionListener {
 
   action(detail: ActionDetail) {
     switch (detail.type) {
-      case ActionType.TAP:
-        break
       case ActionType.UNDO:
+        this.model.undo()
+        break
+      case ActionType.REDO:
+        this.model.nextWord()
         break
       case ActionType.RESET_APP:
-        this.model.reset()
+        this.output.shuffle().arrangeCircle()
+        break
+      case ActionType.HINT:
+        this.output.showHint()
+        break
+      case ActionType.SUCCESS:
+        Overlay.showFinished(0)
+        setTimeout(this.model.nextWord.bind(this.model), 1000)
+        break
+      case ActionType.FAIL:
+        Overlay.showFinished(1)
+        setTimeout(this.model.undo.bind(this.model), 1000)
         break
     }
   }

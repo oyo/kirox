@@ -1,12 +1,29 @@
+.same,
 .same-view {
-  max-width: 100vh;
-  max-height: 100vw;
+  width: 100%;
+  height: 100%;
   display: flex;
+  justify-content: center;
+  place-items: center;
+}
+
+.same {
+  flex-direction: column;
+}
+
+.same-view {
+  flex-direction: row;
 }
 
 .same-view .column {
+  height: 100%;
   display: flex;
   flex-direction: column-reverse;
+}
+
+.same-view {
+  max-width: 100vh;
+  max-height: 100vw;
 }
 
 .same-view img {

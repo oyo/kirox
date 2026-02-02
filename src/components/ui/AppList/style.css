@@ -1,4 +1,9 @@
 .app-list {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  place-items: center;
   list-style-type: none;
   padding-inline-start: 0;
   margin-block-start: 0;
@@ -7,6 +12,7 @@
 }
 
 .app-list li {
+  margin: 4vh 0;
   width: 54vw;
   height: 38vw;
   max-width: 54vh;

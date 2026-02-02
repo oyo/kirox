@@ -7,7 +7,8 @@ https://oyo.github.io/kirox/
 
 ### Currently Implemented
 
-- [Same](https://oyo.github.io/kirox/?page=same) (inspired by [SameGame](https://en.wikipedia.org/wiki/SameGame))
+- [Same](https://oyo.github.io/kirox/?page=same) - inspired by [SameGame](https://en.wikipedia.org/wiki/SameGame)
+- [Word Mix](https://oyo.github.io/kirox/?page=wordmix) - arrange letters of german words
 
 ### Local Setup
 

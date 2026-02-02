@@ -1,15 +1,28 @@
+.wordmix,
+.wordmix-view,
+.wordmix-preview {
+  width: 100%;
+  height: 100%;
+}
+
 .wordmix-view {
-  max-width: 100vh;
-  max-height: 100vw;
-  display: flex;
+  position: absolute;
 }
 
 .wordmix-view img {
-  max-width: 12.5vh;
-  max-height: 12.5vw;
+  position: absolute;
+}
+
+.wordmix-preview {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  place-content: center;
 }
 
 .wordmix-preview img {
+  margin: 1vh 1vw;
   max-width: 8vh;
   max-height: 8vw;
 }

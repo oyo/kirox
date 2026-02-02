@@ -2,32 +2,33 @@ import type { Model, ModelListener } from 'types/events'
 import type { Word } from 'types/words'
 import { replaceUmlaut } from 'util/words'
 
-type MixWord = Word & {
+const MAX_LENGTH = 25
+
+export type MixWord = Word & {
   mix: string
 }
 
 export class WordMixModel implements Model {
   listener: ModelListener[] = []
   words: MixWord[] = []
-  history: string[] = []
+  history: MixWord[] = []
   length: number = 3
 
   constructor() {}
 
   setWords(words: Word[]) {
-    this.words = words.map((w) => ({
-      ...w,
-      mix: replaceUmlaut(w.word).toLocaleUpperCase(),
-    }))
-    this.length = Math.max(
-      this.words.reduce((l, c) => (c.mix.length < l ? c.mix.length : l), 99) - 1,
-      2
-    )
-    this.nextWord()
+    this.words = words
+      .filter((w) => w.word.length >= 3 && w.word.match(/^[a-z]+$/gi))
+      .map((w) => ({
+        ...w,
+        mix: replaceUmlaut(w.word).toLocaleUpperCase(),
+      }))
+    this.reset()
   }
 
   reset() {
-    this.length--
+    this.length =
+      this.words.reduce((l, c) => (c.mix.length < l ? c.mix.length : l), 99) - 1
     this.nextWord()
   }
 
@@ -37,9 +38,17 @@ export class WordMixModel implements Model {
   }
 
   nextWord() {
-    this.length++
-    const currenLen = this.words.filter((w) => w.mix.length === this.length)
-    this.history.push(currenLen[~~(Math.random() * currenLen.length)].mix)
+    let currentLen
+    do {
+      this.length++
+      currentLen = this.words.filter((w) => w.mix.length === this.length)
+    } while (currentLen.length === 0 && this.length < MAX_LENGTH)
+    if (this.length === MAX_LENGTH) {
+      this.fireModelFinished(0)
+      setTimeout(this.reset.bind(this), 1000)
+      return
+    }
+    this.history.push(currentLen[~~(Math.random() * currentLen.length)])
     this.fireModelChanged()
   }
 
