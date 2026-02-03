@@ -29,6 +29,8 @@ export default {
 
   pages,
 
+  isApp: new URLSearchParams(location.search).get('mode') === 'app',
+
   COLOR: {
     BLACK: ['000000', '505050'],
     GRAPHITE: ['202020', '686868'],
@@ -36,7 +38,7 @@ export default {
     SILVER: ['707070', 'a0a0a0'],
     WHITE: ['c0c0c0', 'f0f0f0'],
     BLUE: ['1020a0', '2040d0'],
-    SKY: ['1080e0', '20a0f0'],
+    SKY: ['1080e0', '20c0ff'],
     GRASS: ['004000', '208020'],
     GREEN: ['00a000', '40ff40'],
     NEON: ['60a000', '90e020'],

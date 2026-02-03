@@ -7,6 +7,8 @@ import {
   type ActionListener,
 } from 'types/events'
 import { Hint, Home, Redo, Reset, Undo } from 'components/icons/Shapes'
+import { App } from 'components/App'
+import Config from 'types/Config'
 
 export const Show: Record<string, number> = {
   HOME: 1,
@@ -63,7 +65,7 @@ export class GameUI extends Viewable implements Action {
     this.fireAction({
       type: ActionType.EXIT,
     })
-    location.replace('./')
+    Config.isApp ? App.show(Config.pages.home.run()) : location.replace('./')
   }
 
   addActionListener(l: ActionListener) {

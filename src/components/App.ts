@@ -1,6 +1,15 @@
-import { Viewable } from 'util/ui'
-import { getPage } from 'util/navigate'
+import { N, Viewable } from 'util/ui'
 import './style.css'
 
-export const App = (parent: string | Element) =>
-  Viewable.from(parent).append(getPage().run())
+class AppSingle extends Viewable {
+  constructor() {
+    super()
+    this.view = N('div', undefined, { id: 'app' })
+  }
+
+  show(content: Viewable) {
+    this.clear().append(content)
+  }
+}
+
+export const App = new AppSingle()

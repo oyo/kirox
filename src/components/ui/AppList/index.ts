@@ -1,4 +1,5 @@
 import Config from 'types/Config'
+import { App } from 'components/App'
 import { addEvents, N, Viewable } from 'util/ui'
 import './style.css'
 
@@ -11,7 +12,8 @@ export class AppList extends Viewable {
         .filter(([_, page]) => page.preview)
         .map(([key, page]) =>
           addEvents(N('li', page.preview!().getView()), {
-            click: () => location.replace(`./?page=${key}`),
+            click: () =>
+              Config.isApp ? App.show(page.run()) : location.replace(`./?page=${key}`),
           })
         ),
       { class: 'app-list' }

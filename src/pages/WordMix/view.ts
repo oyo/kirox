@@ -9,7 +9,7 @@ import {
   type View,
 } from 'types/events'
 import type { MixWord, WordMixModel } from './model'
-import { Fail, Image, LetterShape } from 'components/icons/Shapes'
+import { Image, LetterShape } from 'components/icons/Shapes'
 import type { Coord } from 'types/grid'
 
 const gen = ['-', 'der', 'die', 'das']
@@ -37,10 +37,11 @@ export class WordMixView extends Viewable implements Action, View {
   }
 
   placeLetter(letter: HTMLImageElement, x: number, y: number) {
-    letter.setAttribute(
-      'style',
-      `left:${Math.round(x)}px;top:${Math.round(y)}px;max-width:${Math.round(this.size)}px;max-height:${Math.round(this.size)}px;z-index:1;`
-    )
+    letter.style.left = `${Math.round(x)}px`
+    letter.style.top = `${Math.round(y)}px`
+    letter.style.width = `${this.size}px`
+    letter.style.height = `${this.size}px`
+    letter.style.zIndex = '1'
   }
 
   checkInside(letter: HTMLImageElement) {
@@ -88,23 +89,9 @@ export class WordMixView extends Viewable implements Action, View {
     return this
   }
 
-  arrangePreview() {
-    const v = this.getView().getBoundingClientRect()
-    this.size = this.size = v.width / (this.letters.length + 5)
-    const stepX = this.getView().clientWidth / (this.letters.length + 4)
-    const stepY = this.getView().clientHeight / (this.letters.length + 4)
-    for (let i = 0; i < this.letters.length; i++) {
-      const x = (i + 0.1) * stepX
-      const y = (i + 0.1) * stepY
-      this.placeLetter(this.letters[i], x, y)
-    }
-    //this.rearrange(this.letters[0])
-    return this
-  }
-
   arrangeLine() {
     const v = this.getView().getBoundingClientRect()
-    this.size = this.size = v.width / (this.letters.length + 1)
+    this.size = this.size = Math.min(v.width / (this.letters.length + 1), v.height / 3)
     const stepX = this.getView().clientWidth / this.letters.length
     const stepY = this.getView().clientHeight / this.letters.length
     for (let i = 0; i < this.letters.length; i++) {
@@ -118,7 +105,7 @@ export class WordMixView extends Viewable implements Action, View {
 
   arrangeCircle() {
     const v = this.getView().getBoundingClientRect()
-    const size = (this.size = v.width / (this.letters.length + 1))
+    const size = (this.size = Math.min(v.width / (this.letters.length + 1), v.height / 3))
     const angleStep = (2 * Math.PI) / this.letters.length
     const cx = v.width / 2
     const cy = v.height / 2
@@ -175,8 +162,8 @@ export class WordMixView extends Viewable implements Action, View {
   orderAndCheck() {
     this.letters = this.letters.sort(
       (a, b) =>
-        parseInt(a.style.left.replace(/\D/, '')) -
-        parseInt(b.style.left.replace(/\D/, ''))
+        parseFloat(a.style.left.replace(/px;?/, '')) -
+        parseFloat(b.style.left.replace(/px;?/, ''))
     )
     const bound = this.letters.map((l) => l.getBoundingClientRect())
     const readable = bound.reduce(

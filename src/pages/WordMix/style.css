@@ -13,6 +13,20 @@
   position: absolute;
 }
 
+@media (orientation: landscape) {
+  .wordmix-view img {
+    max-width: 40vh;
+    max-height: 40vh;
+  }
+}
+
+@media (orientation: portrait) {
+  .wordmix-view img {
+    max-width: 30vw;
+    max-height: 30vw;
+  }
+}
+
 .wordmix-preview {
   display: flex;
   flex-direction: row;

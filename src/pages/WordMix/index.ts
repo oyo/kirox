@@ -1,4 +1,3 @@
-import type { NumberGridDefinition } from 'types/grid'
 import { WordMixModel } from './model'
 import { WordMixView } from './view'
 import {

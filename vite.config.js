@@ -5,6 +5,7 @@ export default defineConfig({
   base: '/kirox/',
   plugins: [tsconfigPaths()],
   server: {
+    host: true,
     port: 3000,
   },
 })
