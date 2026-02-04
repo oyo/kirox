@@ -23,12 +23,17 @@ export class WordMixModel implements Model {
         ...w,
         mix: replaceUmlaut(w.word).toLocaleUpperCase(),
       }))
-    this.reset()
+    this.start()
+  }
+
+  start() {
+    this.length =
+      this.words.reduce((l, c) => (c.mix.length < l ? c.mix.length : l), 99) - 1
+    this.nextWord()
   }
 
   reset() {
-    this.length =
-      this.words.reduce((l, c) => (c.mix.length < l ? c.mix.length : l), 99) - 1
+    this.length = Math.max(this.length - 1, 2)
     this.nextWord()
   }
 
@@ -45,7 +50,7 @@ export class WordMixModel implements Model {
     } while (currentLen.length === 0 && this.length < MAX_LENGTH)
     if (this.length === MAX_LENGTH) {
       this.fireModelFinished(0)
-      setTimeout(this.reset.bind(this), 1000)
+      setTimeout(this.start.bind(this), 1000)
       return
     }
     this.history.push(currentLen[~~(Math.random() * currentLen.length)])

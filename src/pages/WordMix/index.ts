@@ -52,7 +52,7 @@ export class WordMix extends Viewable implements ModelListener, ActionListener {
         this.model.nextWord()
         break
       case ActionType.RESET_APP:
-        this.output.shuffle().arrangeCircle()
+        this.model.reset()
         break
       case ActionType.HINT:
         this.output.showHint()
@@ -63,7 +63,7 @@ export class WordMix extends Viewable implements ModelListener, ActionListener {
         break
       case ActionType.FAIL:
         Overlay.showFinished(1)
-        setTimeout(this.model.undo.bind(this.model), 1000)
+        setTimeout(this.model.reset.bind(this.model), 1000)
         break
     }
   }

@@ -18,7 +18,11 @@ export class Overlay extends Viewable {
     const app = document.getElementById('app')!
     app.appendChild(v)
     setTimeout(() => {
-      app.removeChild(v)
+      try {
+        app.removeChild(v)
+      } catch (_) {
+        // ignore
+      }
     }, 480)
   }
 }

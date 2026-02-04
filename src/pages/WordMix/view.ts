@@ -14,16 +14,11 @@ import type { Coord } from 'types/grid'
 
 const gen = ['-', 'der', 'die', 'das']
 
-const createBlock = (char: string) => {
-  const img = Image(LetterShape(char[0]))
-  img.setAttribute('data', char)
-  return img
-}
-
 export class WordMixView extends Viewable implements Action, View {
   listener: ActionListener[] = []
   word?: MixWord
   letters: HTMLImageElement[] = []
+  letterMap: Record<string, HTMLImageElement[]> = {}
   size: number = 0
   dragging?: HTMLImageElement
   previousPos?: Coord
@@ -34,6 +29,16 @@ export class WordMixView extends Viewable implements Action, View {
     this.view = addEvents(N('div', undefined, { class: 'wordmix-view' }), {
       mouseleave: () => this.handleEnd(),
     })
+  }
+
+  createBlock(char: string) {
+    const img = Image(LetterShape(char[0]))
+    img.setAttribute('data', char)
+    const letters = this.letterMap[char[0]]
+    if (!letters) {
+      letters
+    }
+    return img
   }
 
   placeLetter(letter: HTMLImageElement, x: number, y: number) {
@@ -111,8 +116,8 @@ export class WordMixView extends Viewable implements Action, View {
     const cy = v.height / 2
     for (let i = 0; i < this.letters.length; i++) {
       const angle = i * angleStep
-      const x = cx + 0.7 * cx * Math.sin(angle) - size / 2
-      const y = cy + 0.7 * cy * Math.cos(angle) - size / 2
+      const x = cx + 0.6 * cx * Math.sin(angle) - size / 2
+      const y = cy + 0.6 * cy * Math.cos(angle) - size / 2
       this.placeLetter(this.letters[i], x, y)
     }
     this.rearrange(this.letters[0])
@@ -123,21 +128,23 @@ export class WordMixView extends Viewable implements Action, View {
     const overlap2 = (l0: HTMLImageElement, l1: HTMLImageElement) => {
       const p0 = l0.getBoundingClientRect()
       const p1 = l1.getBoundingClientRect()
-      const dx = p0.left - p1.left
+      let dx = p0.left - p1.left
       const dy = p0.top - p1.top
       if (Math.abs(dy) < p0.height) {
-        if (dx >= 0 && dx < p1.width + 1) {
-          l1.style.left = p0.left - p1.width - 1 + 'px'
+        if (dx === 0) dx = p0.left + this.size / 2 > vrect.width / 2 ? 1 : -1
+        if (dx < 0 && -dx < p0.width + 1) {
+          l1.style.left = p0.left + p0.width + 1 + 'px'
           fixed.push(l1)
           moving.filter((m) => !fixed.includes(m)).forEach((m) => overlap2(l1, m))
-        } else if (dx <= 0 && -dx < p0.width + 1) {
-          l1.style.left = p0.left + p0.width + 1 + 'px'
+        } else if (dx > 0 && dx < p1.width + 1) {
+          l1.style.left = p0.left - p1.width - 1 + 'px'
           fixed.push(l1)
           moving.filter((m) => !fixed.includes(m)).forEach((m) => overlap2(l1, m))
         }
       }
     }
 
+    const vrect = this.view.getBoundingClientRect()
     const moving = [...this.letters].filter((l) => !fixed.includes(l))
     moving.forEach((m) => overlap2(fixed[0], m))
     this.allInside()
@@ -145,7 +152,6 @@ export class WordMixView extends Viewable implements Action, View {
 
   rearrange(fix: HTMLImageElement) {
     this.autRearrange([fix])
-    this.allInside()
     this.orderAndCheck()
   }
 
@@ -171,8 +177,8 @@ export class WordMixView extends Viewable implements Action, View {
         i === 0
           ? true
           : a &&
-            c.left - bound[i - 1].left < 1.5 * c.width &&
-            Math.abs(c.top - bound[i - 1].top) < 1.2 * c.height,
+            c.left - bound[i - 1].left < 1.4 * c.width &&
+            Math.abs(c.top - bound[i - 1].top) < 1.1 * c.height,
       true
     )
     if (readable) {
@@ -184,29 +190,42 @@ export class WordMixView extends Viewable implements Action, View {
 
   showHint() {
     if (!this.word) return
-    switch (this.hintsGiven) {
-      case 0:
-        console.log(`${gen[this.word.gen]} ...`)
-        break
-      case 1:
-      case 2:
-        console.log(
-          `${gen[this.word.gen]} ${this.word.mix.substring(0, this.hintsGiven)}...`
-        )
-        break
-      default:
-        this.fireAction({ type: ActionType.FAIL })
-        break
+    if (this.hintsGiven++ > 2) {
+      this.fireAction({ type: ActionType.FAIL })
+      return
     }
-    this.hintsGiven++
+    const vrect = this.getView().getBoundingClientRect()
+    for (let h = 0; h < this.hintsGiven; h++) {
+      const letter = this.word.mix[h]
+      if (!this.letterMap[letter] || this.letterMap[letter].length < 1) return
+      const image = this.letterMap[letter].shift()!
+      this.letterMap[letter].push(image)
+      this.setLetterPosition(image, h * this.size, vrect.height / 2 - this.size / 2)
+      this.autRearrange([image])
+      this.setLetterPosition(
+        image,
+        (h + 0.49) * this.size,
+        vrect.height / 2 - this.size / 2
+      )
+      this.autRearrange([image])
+      this.setLetterPosition(
+        image,
+        (h + 0.98) * this.size,
+        vrect.height / 2 - this.size / 2
+      )
+      this.autRearrange([image])
+      this.setLetterPosition(image, h * this.size, vrect.height / 2 - this.size / 2)
+      this.rearrange(image)
+    }
   }
 
   render(model: Model) {
     const history = (model as WordMixModel).history
     this.word = history[history.length - 1]
+    this.letterMap = {}
     this.letters = this.word.mix.split('').map(
       (c) =>
-        addEvents(createBlock(c), {
+        addEvents(this.createBlock(c), {
           mousedown: (e) => {
             this.handleStart(e as MouseEvent)
           },
@@ -223,17 +242,26 @@ export class WordMixView extends Viewable implements Action, View {
             this.handleTouchMove(e as TouchEvent)
           },
           touchend: () => {
-            this.handleTouchEnd()
+            this.handleEnd()
           },
         }) as HTMLImageElement
     )
     this.shuffle().clear().append(this.letters)
+    this.letterMap = this.letters.reduce(
+      (a, c) => {
+        const l = c.getAttribute('data') ?? ''
+        ;(a[l] = a[l] ?? []).push(c)
+        return a
+      },
+      {} as Record<string, HTMLImageElement[]>
+    )
     this.hintsGiven = 0
     return this
   }
 
   handleStart(e: MouseEvent) {
     e.preventDefault()
+    this.previousPos = { x: e.clientX, y: e.clientY }
     this.dragging = e.target! as HTMLImageElement
     this.dragging.style.zIndex = '2'
   }
@@ -244,11 +272,19 @@ export class WordMixView extends Viewable implements Action, View {
       this.rearrange(this.dragging)
     }
     this.dragging = undefined
+    this.previousPos = undefined
   }
 
   handleMove(e: MouseEvent) {
     e.preventDefault()
-    if (this.dragging) this.moveLetter(this.dragging, e.movementX, e.movementY)
+    if (!this.dragging) return
+    if (this.previousPos)
+      this.moveLetter(
+        this.dragging,
+        e.clientX - this.previousPos.x,
+        e.clientY - this.previousPos.y
+      )
+    this.previousPos = { x: e.clientX, y: e.clientY }
   }
 
   handleTouchStart(e: TouchEvent) {
@@ -256,11 +292,6 @@ export class WordMixView extends Viewable implements Action, View {
     this.previousPos = { x: e.touches[0].pageX, y: e.touches[0].pageY }
     this.dragging = e.target! as HTMLImageElement
     this.dragging.style.zIndex = '2'
-  }
-
-  handleTouchEnd() {
-    this.previousPos = undefined
-    this.handleEnd()
   }
 
   handleTouchMove(e: TouchEvent) {
