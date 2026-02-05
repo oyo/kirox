@@ -1,0 +1,13 @@
+.solitaire,
+.solitaire-view,
+.solitaire-preview {
+  width: 100%;
+  height: 100%;
+  padding-top: 200px;
+}
+
+.solitaire-view img {
+  width: 9vw;
+  height: 13.8vw;
+  margin: -11vh 0.1vw;
+}

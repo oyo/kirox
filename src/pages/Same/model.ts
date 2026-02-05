@@ -49,6 +49,10 @@ export class SameModel implements Model {
     this.fireModelChanged()
   }
 
+  redo() {
+    // not implemented
+  }
+
   tap(coord: Coord) {
     const g = this.grid
     const same = new Set<GridItem<number>>()

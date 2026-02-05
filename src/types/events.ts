@@ -3,6 +3,7 @@ import type { Coord } from 'types/grid'
 export interface Model {
   reset: () => void
   undo: () => void
+  redo: () => void
   addModelListener: (listener: ModelListener) => Model
   fireModelChanged: () => void
   fireModelFinished: (status: number) => void

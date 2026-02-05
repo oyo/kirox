@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="400" height="400">
+<defs>
+<style>
+.b{fill:black;}
+.r{fill:red;}
+.t{font-family:Georgia,serif;font-size:8px;text-anchor:middle;}
+</style>
+<path id="club" class="b" d="M2 7
+a30 30 0 0 0 4 10
+a20 20 0 0 0 -12 0
+a30 30 0 0 0 4 -10
+a10 10 0 0 0 -3 2
+a8 8 0 1 1 0 -10
+a10 10 0 0 0 3 2
+a8 8 0 0 0 -3 -5
+a8 8 0 1 1 10 0
+a8 8 0 0 0 -3 5
+a10 10 0 0 0 3 -2
+a8 8 0 1 1 0 10
+a10 10 0 0 0 -3 -2
+z"/>
+<path id="heart" class="r" d="M0 -10
+a1 1 0 0 1 16 8
+c-4,8 -8,8 -16,22
+c-4,-8 -12,-14 -16,-22
+a1 1 0 0 1 16 -8
+z"/>
+<path id="spade" class="b" d="M-1 -19
+a1.5 1.5 0 0 1 2 0
+a80 80 0 0 0 10 10
+l4 4
+a10 10 0 0 1 -13 15
+a30 30 0 0 0 4 10
+a20 20 0 0 0 -12 0
+a30 30 0 0 0 4 -10
+a10 10 0 0 1 -13 -15
+l4 -4
+a80 80 0 0 0 10 -10
+z"/>
+<path id="diamond" class="r" d="M-15 0
+a70 70 0 0 0 15 -20
+a70 70 0 0 0 15 20
+a70 70 0 0 0 -15 20
+a70 70 0 0 0 -15 -20
+z"/>
+</defs>
+<g transform="translate(20,20)"><use href="#spade"/></g>
+<g transform="translate(20,20)"><use href="#heart"/></g>
+<g transform="translate(20,20)"><use href="#club"/></g>
+<g transform="translate(20,20)"><use href="#diamond"/></g>
+<path stroke="white" stroke-width="0.1" d="M0 20l40 0M20 0l0 40"/>
+</svg>

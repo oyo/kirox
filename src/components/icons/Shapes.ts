@@ -6,18 +6,10 @@ import shapeplain from './svg/shapeplain.svg'
 import Config from 'types/Config'
 import { addEvents, N } from 'util/ui'
 import { ShapePath } from './ShapePath'
+import { svgDecode, svgEncode } from 'util/image'
 
-const svgDU = 'data:image/svg+xml;'
-const svgDUB = `${svgDU}base64,`
 const BASE_COLOR = '808080'
 const BASE_PATH = 'M25,5l20,40l-40,0z'
-
-export const svgDecode = (data: string): string =>
-  data.startsWith(svgDUB)
-    ? atob(data.substring(svgDUB.length))
-    : decodeURIComponent(data.substring(svgDU.length))
-
-export const svgEncode = (data: string): string => `${svgDUB}${btoa(data)}`
 
 export const Ball = (col?: Array<string>) =>
   col ? ball.replace(/404040/g, col[0]).replace(/808080/g, col[1]) : ball

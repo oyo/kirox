@@ -12,8 +12,6 @@ import type { MixWord, WordMixModel } from './model'
 import { Image, LetterShape } from 'components/icons/Shapes'
 import type { Coord } from 'types/grid'
 
-const gen = ['-', 'der', 'die', 'das']
-
 export class WordMixView extends Viewable implements Action, View {
   listener: ActionListener[] = []
   word?: MixWord
@@ -27,6 +25,12 @@ export class WordMixView extends Viewable implements Action, View {
   constructor() {
     super()
     this.view = addEvents(N('div', undefined, { class: 'wordmix-view' }), {
+      mousemove: (e) => {
+        this.handleMove(e as MouseEvent)
+      },
+      touchmove: (e) => {
+        this.handleTouchMove(e as TouchEvent)
+      },
       mouseleave: () => this.handleEnd(),
     })
   }
@@ -229,17 +233,11 @@ export class WordMixView extends Viewable implements Action, View {
           mousedown: (e) => {
             this.handleStart(e as MouseEvent)
           },
-          mousemove: (e) => {
-            this.handleMove(e as MouseEvent)
-          },
           mouseup: () => {
             this.handleEnd()
           },
           touchstart: (e) => {
             this.handleTouchStart(e as TouchEvent)
-          },
-          touchmove: (e) => {
-            this.handleTouchMove(e as TouchEvent)
           },
           touchend: () => {
             this.handleEnd()
