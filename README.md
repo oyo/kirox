@@ -16,7 +16,7 @@ https://github.com/oyo/kirox-app/releases/latest
 ### WIP or Planned
 
 - Minesweeper
-- Solitaire
+- Klondike
 - Mahjong
 - Tetris
 - Sokoban

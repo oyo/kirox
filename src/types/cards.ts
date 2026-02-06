@@ -1,11 +1,11 @@
-export const CardColor = {
+export const CardSuit = {
   CLUB: 1,
   HEART: 2,
   SPADE: 3,
   DIAMOND: 4,
 }
 
-export const CardColorName = [null, 'Club', 'Heart', 'Spade', 'Diamond']
+export const CardSuitName = [null, 'Club', 'Heart', 'Spade', 'Diamond']
 
 export const CardValueName = [
   null,
@@ -25,7 +25,6 @@ export const CardValueName = [
 ]
 
 export type Card = {
-  color: number
+  suit: number
   value: number
-  variant?: boolean
 }

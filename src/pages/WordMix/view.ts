@@ -11,6 +11,7 @@ import {
 import type { MixWord, WordMixModel } from './model'
 import { Image, LetterShape } from 'components/icons/Shapes'
 import type { Coord } from 'types/grid'
+import { shuffle } from 'util/basic'
 
 export class WordMixView extends Viewable implements Action, View {
   listener: ActionListener[] = []
@@ -81,21 +82,6 @@ export class WordMixView extends Viewable implements Action, View {
   moveLetter(letter: HTMLImageElement, dx: number, dy: number) {
     const rect = letter.getBoundingClientRect()
     return this.setLetterPosition(letter, rect.left + dx, rect.top + dy)
-  }
-
-  shuffle() {
-    const array = this.letters
-    let m = array.length,
-      t,
-      i
-    while (m) {
-      i = Math.floor(Math.random() * m--)
-      t = array[m]
-      array[m] = array[i]
-      array[i] = t
-    }
-    this.letters = array
-    return this
   }
 
   arrangeLine() {
@@ -224,6 +210,7 @@ export class WordMixView extends Viewable implements Action, View {
   }
 
   render(model: Model) {
+    // @ts-expect-error
     const history = (model as WordMixModel).history
     this.word = history[history.length - 1]
     this.letterMap = {}
@@ -244,7 +231,8 @@ export class WordMixView extends Viewable implements Action, View {
           },
         }) as HTMLImageElement
     )
-    this.shuffle().clear().append(this.letters)
+    this.letters = shuffle(this.letters)
+    this.clear().append(this.letters)
     this.letterMap = this.letters.reduce(
       (a, c) => {
         const l = c.getAttribute('data') ?? ''

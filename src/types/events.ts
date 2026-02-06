@@ -1,5 +1,3 @@
-import type { Coord } from 'types/grid'
-
 export interface Model {
   reset: () => void
   undo: () => void
@@ -16,7 +14,7 @@ export interface ModelListener {
 
 export interface ActionDetail {
   type: number
-  data?: Coord
+  data?: any
 }
 
 export const ActionType = {

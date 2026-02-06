@@ -1,8 +1,8 @@
 import { Home } from 'pages/Home'
 import { Same } from 'pages/Same'
 import { SamePreview } from 'pages/Same/preview'
-import { Solitaire } from 'pages/Solitaire'
-import { SolitairePreview } from 'pages/Solitaire/preview'
+import { Klondike } from 'pages/Klondike'
+import { KlondikePreview } from 'pages/Klondike/preview'
 import { WordMix } from 'pages/WordMix'
 import { WordMixPreview } from 'pages/WordMix/preview'
 import type { Viewable } from 'util/ui'
@@ -24,9 +24,9 @@ const pages: Record<string, AppType> = {
     run: () => new WordMix(),
     preview: () => new WordMixPreview(),
   },
-  solitaire: {
-    run: () => new Solitaire(),
-    preview: () => new SolitairePreview(),
+  klondike: {
+    run: () => new Klondike(),
+    preview: () => new KlondikePreview(),
   },
 }
 

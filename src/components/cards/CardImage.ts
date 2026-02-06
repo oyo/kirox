@@ -1,14 +1,14 @@
 import { type Card, CardValueName } from 'types/cards'
 import { N } from 'util/ui'
-import { ColorShape } from './ColorShape'
+import { SuitShape } from './SuitShape'
 import { svgEncode } from 'util/image'
 
 const W = 64
 const H = 100
 
-const XV = 4
-const XC = 4
-const XCA = 11
+const XV = 5
+const XC = 5
+const XCA = 12
 const YV = 6
 const YC = 14
 const YCA = 6
@@ -55,12 +55,8 @@ const C10 = [...C4, [X1, Y3], [X1, Y5], [X3, Y3], [X3, Y5], [X2, Y2], [X2, Y6]]
 
 const C = [[], C1, C2, C3, C4, C5, C6, C7, C8, C9, C10]
 
-const name = ['', 'club', 'heart', 'spade', 'diamond']
-
-const CardShape = (
-  color: number,
-  content: string
-) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}">
+const CardShape = (content: string) =>
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}">
 <defs>
 <style>
 .b{fill:black;}
@@ -72,30 +68,34 @@ const CardShape = (
 <stop offset="0%" stop-color="#f5ede2"></stop>
 <stop offset="100%" stop-color="#ebe1d0"></stop>
 </linearGradient>
-<path id="c" class="${color % 2 ? 'b' : 'r'}" d="${ColorShape[color]}"/>
 </defs>
 <rect class="w" fill="url(#p)" x="0" y="0" rx="${(W + H) / 60}" ry="${(W + H) / 60}" width="${W}" height="${H}" />
 ${content}
-</svg>`
+</svg>
+`
+
+const FrontShape = (color: number, content: string) =>
+  CardShape(`<defs><path id="c" class="${color % 2 ? 'b' : 'r'}" d="${SuitShape[color]}"/></defs>
+${content}`)
 
 const transform = (content: string, x: number, y: number, scale: number) =>
   `<g transform="translate(${x},${y})scale(${scale})${y > 50 ? 'rotate(180)' : ''}">${content}</g>`
 
 const val = (card: Card) =>
-  `<text class="t ${card.color % 2 ? 'b' : 'r'}">${CardValueName[card.value]}</text>`
+  `<text class="t ${card.suit % 2 ? 'b' : 'r'}">${CardValueName[card.value]}</text>`
 
-const createShape = (card: Card): string =>
-  CardShape(
-    card.color,
+const createShape = (card: Card, variant?: boolean): string =>
+  FrontShape(
+    card.suit,
     `${transform(val(card), XV, YV, 1)}${transform(
       '<use href="#c"/>',
-      card.variant ? XCA : XC,
-      card.variant ? YCA : YC,
+      variant ? XCA : XC,
+      variant ? YCA : YC,
       0.15
     )}${transform(val(card), W - XV, H - YV, 1)}${transform(
       '<use href="#c"/>',
-      card.variant ? W - XCA : W - XC,
-      card.variant ? H - YCA : H - YC,
+      variant ? W - XCA : W - XC,
+      variant ? H - YCA : H - YC,
       0.15
     )}${
       card.value > 10
@@ -105,5 +105,43 @@ const createShape = (card: Card): string =>
 `
   )
 
-export const CardImage = (card: Card): HTMLImageElement =>
-  N('img', null, { class: 'card', src: svgEncode(createShape(card)) }) as HTMLImageElement
+const createBackShape = (n: number): string =>
+  CardShape(
+    new Array(n)
+      .fill('')
+      .map(
+        (_, i) =>
+          `<rect stroke="#0077aa" stroke-width=".5" fill="${i < n - 1 ? 'none' : '#0077aa'}"
+x="${0.04 * W + (i * (0.4 * W)) / n}" y="${0.04 * H + (i * 0.4 * H) / n}"
+width="${W - 0.08 * W - (0.8 * i * W) / n}" height="${H - 0.08 * H - (0.8 * i * H) / n}"
+rx="${(W + H) / 1200}" ry="${(W + H) / 1200}"
+/>`
+      )
+      .join('')
+  )
+
+const createPlaceholderShape = (): string =>
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}">
+<rect stroke="#88aa88" stroke-width="1" fill="none"
+x="${0.08 * W}" y="${0.08 * H}"
+width="${W - 0.16 * W}" height="${H - 0.16 * H}"
+rx="${(W + H) / 1200}" ry="${(W + H) / 1200}"
+/></svg>`
+
+export const CardImage = (card: Card, variant?: boolean): HTMLImageElement =>
+  N('img', null, {
+    class: 'card',
+    src: svgEncode(createShape(card, variant)),
+  }) as HTMLImageElement
+
+export const CardBackImage = (): HTMLImageElement =>
+  N('img', null, {
+    class: 'card back',
+    src: svgEncode(createBackShape(32)),
+  }) as HTMLImageElement
+
+export const CardPlaceholderImage = (): HTMLImageElement =>
+  N('img', null, {
+    class: 'card placeholder',
+    src: svgEncode(createPlaceholderShape()),
+  }) as HTMLImageElement

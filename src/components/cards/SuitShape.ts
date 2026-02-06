@@ -1,4 +1,4 @@
-export const ColorShape = [
+export const SuitShape = [
   null,
   // CLUB
   `M2 7

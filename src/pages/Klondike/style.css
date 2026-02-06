@@ -1,0 +1,64 @@
+.klondike,
+.klondike-view {
+  height: 100vh;
+}
+
+.klondike,
+.klondike-view,
+.klondike-preview {
+  background-color: #00683d;
+}
+
+.klondike-view {
+  display: flex;
+  flex-direction: column;
+}
+
+.klondike-view .card {
+  width: 13vw;
+  margin: 0 0.6vw;
+}
+
+.klondike-top-view {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 1vh;
+}
+
+.klondike-stock-view {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-left: 1vw;
+}
+
+.klondike-stock-stack-view {
+  margin-right: 13.65vw;
+}
+
+.klondike-stock-stack-view .card {
+  margin-right: -13.65vw;
+}
+
+.klondike-foundation-view {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.klondike-tableau-view {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 2;
+}
+
+.klondike-tableau-view {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.klondike-tableau-stack-view .card {
+  margin-bottom: -18vw;
+}
