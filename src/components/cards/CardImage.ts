@@ -132,12 +132,13 @@ export const CardImage = (card: Card, variant?: boolean): HTMLImageElement =>
   N('img', null, {
     class: 'card',
     src: svgEncode(createShape(card, variant)),
+    id: `card${card.suit * card.value}`,
   }) as HTMLImageElement
 
 export const CardBackImage = (): HTMLImageElement =>
   N('img', null, {
     class: 'card back',
-    src: svgEncode(createBackShape(32)),
+    src: svgEncode(createBackShape(30)),
   }) as HTMLImageElement
 
 export const CardPlaceholderImage = (): HTMLImageElement =>
