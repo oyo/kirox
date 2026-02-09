@@ -15,6 +15,8 @@ export const KlondikeActionTypes = {
   DROP_TABLEAU: 109,
 }
 
+export type KlondikeMoveAction = {}
+
 export type KlondikeAction = {
   type: number
   model?: KlondikeModel

@@ -55,7 +55,7 @@ const C10 = [...C4, [X1, Y3], [X1, Y5], [X3, Y3], [X3, Y5], [X2, Y2], [X2, Y6]]
 
 const C = [[], C1, C2, C3, C4, C5, C6, C7, C8, C9, C10]
 
-const CardShape = (content: string) =>
+const CardBase = (content: string) =>
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}">
 <defs>
 <style>
@@ -75,7 +75,7 @@ ${content}
 `
 
 const FrontShape = (color: number, content: string) =>
-  CardShape(`<defs><path id="c" class="${color % 2 ? 'b' : 'r'}" d="${SuitShape[color]}"/></defs>
+  CardBase(`<defs><path id="c" class="${color % 2 ? 'b' : 'r'}" d="${SuitShape[color]}"/></defs>
 ${content}`)
 
 const transform = (content: string, x: number, y: number, scale: number) =>
@@ -84,7 +84,7 @@ const transform = (content: string, x: number, y: number, scale: number) =>
 const val = (card: Card) =>
   `<text class="t ${card.suit % 2 ? 'b' : 'r'}">${CardValueName[card.value]}</text>`
 
-const createShape = (card: Card, variant?: boolean): string =>
+export const CardShape = (card: Card, variant?: boolean): string =>
   FrontShape(
     card.suit,
     `${transform(val(card), XV, YV, 1)}${transform(
@@ -106,7 +106,7 @@ const createShape = (card: Card, variant?: boolean): string =>
   )
 
 const createBackShape = (n: number): string =>
-  CardShape(
+  CardBase(
     new Array(n)
       .fill('')
       .map(
@@ -131,18 +131,21 @@ rx="${(W + H) / 1200}" ry="${(W + H) / 1200}"
 export const CardImage = (card: Card, variant?: boolean): HTMLImageElement =>
   N('img', null, {
     class: 'card',
-    src: svgEncode(createShape(card, variant)),
-    id: `card${card.suit * card.value}`,
+    src: svgEncode(CardShape(card, variant)),
+    id: `card${(card.suit - 1) * 13 + card.value - 1}`,
+    draggable: 'false',
   }) as HTMLImageElement
 
 export const CardBackImage = (): HTMLImageElement =>
   N('img', null, {
     class: 'card back',
     src: svgEncode(createBackShape(30)),
+    draggable: 'false',
   }) as HTMLImageElement
 
 export const CardPlaceholderImage = (): HTMLImageElement =>
   N('img', null, {
     class: 'card placeholder',
     src: svgEncode(createPlaceholderShape()),
+    draggable: 'false',
   }) as HTMLImageElement

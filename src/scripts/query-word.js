@@ -14,7 +14,8 @@ const queryOnline = async (noun) => {
     .replace(/<[^<]*>/g, '')
     .replace(/·/g, '.')
     .split(/,?\s+/)
-  noun = [...noun, ...word]
+    .filter((w) => !w.match(/^(kein|Plural:?)$/))
+  noun = [noun[0], ...word]
   console.log(JSON.stringify(noun) + ',')
   return noun
 }
@@ -26,33 +27,25 @@ const query = async (items) => {
   }
 }
 
-const removeDuplicates = (nouns) => {
-  const words = nouns.map(JSON.stringify)
-  const uni = [...new Set(words)].map(JSON.parse)
-  console.log(JSON.stringify(uni))
-}
-
-const listWords = (words) =>
-  console.log(
-    JSON.stringify([
-      ...new Set(
-        words.map((w) => w[1].replace(/\./g, '')).sort((a, b) => b.length - a.length)
-      ),
-    ])
-  )
-
-const groupByLength = (words) =>
+const count = (words) =>
   words.reduce(
-    (a, c) => (
-      (a[c[1].replace(/\./g, '').length] ??= []).push(c[1].replace(/\./g, '')),
-      a
-    ),
+    (a, c) => ({
+      ...a,
+      [c]: (a[c] || 0) + 1,
+    }),
     {}
   )
+const sort = (words) => words.sort((a, b) => a[1].localeCompare(b[1]))
+const sortLength = (words) => words.sort((a, b) => b[1].length - a[1].length)
+const uniq = (words) => [...new Set(words.map(JSON.stringify))].map(JSON.parse)
+const duplicates = (words) =>
+  ((dict) => Object.keys(dict).filter((a) => dict[a] > 1))(count(words))
+const plain = (words) => words.map((w) => w[1].replace(/\./g, ''))
+const upper = (words) => words.map((w) => w[1].toLocaleUpperCase())
+const noUmlaut = (words) => words.filter((w) => w[1].match(/^[A-Z]+$/i))
 
+const groupByLength = (words) =>
+  plain(words).reduce((a, c) => ((a[c.length] ??= []).push(c), a), {})
+
+console.log(nouns.length)
 console.log(groupByLength(nouns))
-
-//const miss = uni.filter(w => !words.includes(w[1]))
-////console.log(miss.length, miss)
-//
-//query(miss)

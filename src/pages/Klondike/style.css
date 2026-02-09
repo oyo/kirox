@@ -16,42 +16,13 @@
 
 .klondike-view .card {
   width: 13vw;
-  margin: 0 0.6vw;
-}
-
-.klondike-moving-view {
-  position: fixed;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 998;
-}
-
-.klondike-moving-dropzones-view {
-  position: fixed;
-  z-index: 1;
-}
-
-.klondike-moving-dropzones-view img {
-  position: fixed;
-  border: 3px solid greenyellow;
-}
-
-.klondike-moving-stack-view {
-  position: fixed;
-  z-index: 2;
-}
-
-.klondike-moving-stack-view .card {
-  margin-bottom: -18vw;
 }
 
 .klondike-top-view {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 1vh;
+  margin-bottom: 1vw;
 }
 
 .klondike-stock-view {
@@ -62,11 +33,15 @@
 }
 
 .klondike-stock-stack-view {
-  margin-right: 13.65vw;
+  background-image: url(./img/cards/card-back.svg);
+  background-repeat: no-repeat;
+  background-size: 13vw;
+  min-width: 13vw;
+  xmargin-right: 13.05vw;
 }
 
 .klondike-stock-stack-view .card {
-  margin-right: -13.65vw;
+  xmargin-right: -13.05vw;
 }
 
 .klondike-foundation-view {
@@ -82,10 +57,35 @@
 }
 
 .klondike-tableau-stack-view {
+  background-image: url(./img/cards/card-back.svg);
+  background-repeat: no-repeat;
+  background-size: 13vw;
+  min-width: 13vw;
   display: flex;
   flex-direction: column;
 }
 
-.klondike-tableau-stack-view .card {
+.klondike-tableau-stack-view .placeholder {
+  margin-bottom: -20.5vw;
+}
+
+.klondike-tableau-stack-view .back {
   margin-bottom: -18vw;
+}
+
+.klondike-tableau-stack-view .drag {
+  background-repeat: no-repeat;
+  background-size: 13vw;
+  min-height: 18.5vw;
+  padding-top: 2.5vw;
+}
+
+.dragging {
+  opacity: 0.1;
+}
+
+.dropzone {
+  width: 13vw;
+  height: 18.5vw;
+  border: 1px solid orange;
 }

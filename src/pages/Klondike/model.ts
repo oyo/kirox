@@ -43,6 +43,7 @@ export class KlondikeModel implements Model {
   }
 
   tryDraw(action: KlondikeAction) {
+    /*
     const waste = this.table.stock[1]
     if (waste.length === 0 || this.table.drawn) return
     this.table.drawn = {
@@ -54,11 +55,12 @@ export class KlondikeModel implements Model {
       type: KlondikeActionTypes.DRAW,
       model: this,
     })
+      */
   }
 
   tryDrop(action: KlondikeAction) {
     // example drop waste
-
+    /*
     const waste = this.table.stock[1]
     if (waste.length === 0 || this.table.drawn) return
     this.table.drawn = {
@@ -70,6 +72,7 @@ export class KlondikeModel implements Model {
       type: KlondikeActionTypes.DRAW,
       model: this,
     })
+    */
   }
 
   reset() {
