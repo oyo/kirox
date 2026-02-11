@@ -1,5 +1,5 @@
 import { addEvents, json, N, Viewable } from 'util/ui'
-import { Block, BlockShape, Boom, LetterShape } from 'components/icons/Shapes'
+import { Block, BlockShape, LetterShape } from 'components/icons/Shapes'
 import './style.css'
 import {
   ActionType,

@@ -1,8 +1,6 @@
 import { Home } from 'pages/Home'
 import { Same } from 'pages/Same'
 import { SamePreview } from 'pages/Same/preview'
-import { Klondike } from 'pages/Klondike'
-import { KlondikePreview } from 'pages/Klondike/preview'
 import { WordMix } from 'pages/WordMix'
 import { WordMixPreview } from 'pages/WordMix/preview'
 import type { Viewable } from 'util/ui'
