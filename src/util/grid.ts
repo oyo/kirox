@@ -1,4 +1,10 @@
-import { NONE, type Grid, type GridItem, type NumberGridDefinition } from 'types/grid'
+import {
+  NONE,
+  type Grid,
+  type GridItem,
+  type GridSize,
+  type NumberGridDefinition,
+} from 'types/grid'
 
 export const copy = (grid: Grid<any>) => grid.map((r) => [...r])
 
@@ -34,6 +40,20 @@ export const createRandomNumberGrid = (definition: NumberGridDefinition): Grid<n
     }))
   )
 
+export const createEmptyNumberGrid = (
+  size: GridSize,
+  value: number,
+  state?: number
+): Grid<number> =>
+  new Array(size.dy).fill(0).map((_, y) =>
+    new Array(size.dx).fill(0).map((_, x) => ({
+      id: y * size.dx + x,
+      coord: { x, y },
+      value,
+      state: state ?? 0,
+    }))
+  )
+
 export const getItemAt = (
   grid: Grid<any>,
   y: number,
@@ -56,6 +76,12 @@ export const filterEmpty = (grid: Grid<any>) =>
     .map((r) => r.filter((item) => item.id !== -1))
     .filter((r) => r.length > 0)
     .map((r, y) => r.map((item, x) => ((item.coord.y = y), (item.coord.x = x), item)))
+
+export const countValue = (grid: Grid<any>, value: any) =>
+  grid.reduce((a, r) => a + r.reduce((a, c) => a + (c.value === value ? 1 : 0), 0), 0)
+
+export const countState = (grid: Grid<any>, state: any) =>
+  grid.reduce((a, r) => a + r.reduce((a, c) => a + (c.state === state ? 1 : 0), 0), 0)
 
 export const debug = (grid: Grid<any>) =>
   grid

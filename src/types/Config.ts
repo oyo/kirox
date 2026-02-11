@@ -6,6 +6,8 @@ import { KlondikePreview } from 'pages/Klondike/preview'
 import { WordMix } from 'pages/WordMix'
 import { WordMixPreview } from 'pages/WordMix/preview'
 import type { Viewable } from 'util/ui'
+import { MineSweeper } from 'pages/MineSweeper'
+import { MineSweeperPreview } from 'pages/MineSweeper/preview'
 
 type AppType = {
   run: () => Viewable
@@ -16,6 +18,10 @@ const pages: Record<string, AppType> = {
   home: {
     run: () => new Home(),
   },
+  MineSweeper: {
+    run: () => new MineSweeper(),
+    preview: () => new MineSweeperPreview(),
+  },
   same: {
     run: () => new Same(),
     preview: () => new SamePreview(),
@@ -24,10 +30,10 @@ const pages: Record<string, AppType> = {
     run: () => new WordMix(),
     preview: () => new WordMixPreview(),
   },
-  klondike: {
-    run: () => new Klondike(),
-    preview: () => new KlondikePreview(),
-  },
+  //  klondike: {
+  //    run: () => new Klondike(),
+  //    preview: () => new KlondikePreview(),
+  //  },
 }
 
 export default {
@@ -45,12 +51,14 @@ export default {
     WHITE: ['c0c0c0', 'f0f0f0'],
     BLUE: ['1020a0', '2040d0'],
     SKY: ['1080e0', '20c0ff'],
-    GRASS: ['004000', '208020'],
+    DARKGREEN: ['004000', '208020'],
+    GRASS: ['008000', '30c030'],
     GREEN: ['00a000', '40ff40'],
     NEON: ['60a000', '90e020'],
     RED: ['a01000', 'f04030'],
     WINE: ['600000', 'a03030'],
     ORANGE: ['b05000', 'e08040'],
+    DARKYELLOW: ['808000', 'c0c030'],
     YELLOW: ['a0a000', 'd8d840'],
     MAGENTA: ['a000a0', 'd840d8'],
     CYAN: ['00a0a0', '40d8d8'],

@@ -31,7 +31,14 @@
   max-height: 12.5vw;
 }
 
-.same-preview img {
-  max-width: 8vh;
-  max-height: 8vw;
+.same-preview .column {
+  width: 16%;
+  height: 100%;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.same-preview .same-view img {
+  max-width: 100%;
+  max-height: 23%;
 }

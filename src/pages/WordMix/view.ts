@@ -106,8 +106,8 @@ export class WordMixView extends Viewable implements Action, View {
     const cy = v.height / 2
     for (let i = 0; i < this.letters.length; i++) {
       const angle = i * angleStep
-      const x = cx + 0.6 * cx * Math.sin(angle) - size / 2
-      const y = cy + 0.6 * cy * Math.cos(angle) - size / 2
+      const x = cx + 0.7 * cx * Math.sin(angle) - size / 2
+      const y = cy + 0.7 * cy * Math.cos(angle) - size / 2
       this.placeLetter(this.letters[i], x, y)
     }
     this.rearrange(this.letters[0])

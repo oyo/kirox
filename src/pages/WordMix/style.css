@@ -13,20 +13,6 @@
   position: absolute;
 }
 
-@media (orientation: landscape) {
-  .wordmix-view img {
-    max-width: 40vh;
-    max-height: 40vh;
-  }
-}
-
-@media (orientation: portrait) {
-  .wordmix-view img {
-    max-width: 30vw;
-    max-height: 30vw;
-  }
-}
-
 .wordmix-preview {
   display: flex;
   flex-direction: row;
@@ -36,7 +22,25 @@
 }
 
 .wordmix-preview img {
-  margin: 1vh 1vw;
-  width: 8vh;
-  height: 8vw;
+  width: 18%;
+}
+
+.wordmix-preview img:nth-child(even) {
+  margin: 1% 1% 10% 1%;
+}
+
+.wordmix-preview img:nth-child(odd) {
+  margin: 10% 1% 1% 1%;
+}
+
+@media (orientation: landscape) {
+  .wordmix-view img {
+    max-height: 30vh;
+  }
+}
+
+@media (orientation: portrait) {
+  .wordmix-view img {
+    max-width: 30vw;
+  }
 }

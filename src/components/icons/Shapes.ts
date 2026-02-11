@@ -33,11 +33,14 @@ export const Shape = (path: string, col?: string) =>
 export const BlockShape = (path: string, col?: Array<string>) =>
   Combine(Block(col ?? Config.COLOR.ORANGE), shapeblock.replace(BASE_PATH, path))
 
-export const LetterShape = (letter: string, col?: Array<string>) =>
+export const LetterShape = (letter: string, col?: Array<Array<string>>) =>
   Combine(
-    Block(col ?? Config.COLOR.SKY),
+    Block(col && col[0] ? col[0] : Config.COLOR.SKY),
     svgEncode(
-      svgDecode(shapeletter).replace('>A<', `>&#x${letter.charCodeAt(0).toString(16)};<`)
+      svgDecode(shapeletter)
+        .replace('>A<', `>&#x${letter.charCodeAt(0).toString(16)};<`)
+        .replace('dddd44', col && col[1] ? col[1][0] : 'dddd44')
+        .replace('ffffcc', col && col[1] ? col[1][1] : 'ffffcc')
     )
   )
 
@@ -57,6 +60,8 @@ export const Redo = (click: () => void) =>
   Button(Image(BlockShape(ShapePath.REDO)), click)
 export const Hint = (click: () => void) =>
   Button(Image(BlockShape(ShapePath.HINT)), click)
+export const Boom = (click: () => void) =>
+  Button(Image(BlockShape(ShapePath.BOOM, Config.COLOR.BLACK)), click)
 
 export const Success = () => Image(Shape(ShapePath.OK, Config.COLOR.GREEN[1]))
 export const Fail = () => Image(Shape(ShapePath.NOK, Config.COLOR.RED[1]))

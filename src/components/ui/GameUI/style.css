@@ -1,36 +1,33 @@
 .ui {
   position: fixed;
-  right: 0.2vw;
+  right: 0;
   display: flex;
 }
 
 .ui img {
   cursor: pointer;
-  margin: 0.2vw;
-  max-width: 120px;
-  max-height: 120px;
-  min-width: 60px;
-  min-height: 60px;
 }
 
 @media (orientation: landscape) {
   .ui {
     flex-direction: column;
-    top: 0.2vw;
+    top: 0;
   }
   .ui img {
-    width: 19.5vh;
+    margin: 0.1vw;
     height: 19.5vh;
+    max-height: 100px;
   }
 }
 
 @media (orientation: portrait) {
   .ui {
     flex-direction: row;
-    bottom: 0.2vw;
+    bottom: 0;
   }
   .ui img {
+    margin: 0.1vh;
     width: 19.5vw;
-    height: 19.5vw;
+    max-width: 100px;
   }
 }
