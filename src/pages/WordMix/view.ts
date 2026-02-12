@@ -8,14 +8,14 @@ import {
   type Model,
   type View,
 } from 'types/events'
-import type { MixWord, WordMixModel } from './model'
+import type { WordMixModel } from './model'
 import { Image, LetterShape } from 'components/icons/Shapes'
 import type { Coord } from 'types/grid'
 import { shuffle } from 'util/basic'
 
 export class WordMixView extends Viewable implements Action, View {
   listener: ActionListener[] = []
-  word?: MixWord
+  word?: string
   letters: HTMLImageElement[] = []
   letterMap: Record<string, HTMLImageElement[]> = {}
   size: number = 0
@@ -82,20 +82,6 @@ export class WordMixView extends Viewable implements Action, View {
   moveLetter(letter: HTMLImageElement, dx: number, dy: number) {
     const rect = letter.getBoundingClientRect()
     return this.setLetterPosition(letter, rect.left + dx, rect.top + dy)
-  }
-
-  arrangeLine() {
-    const v = this.getView().getBoundingClientRect()
-    this.size = this.size = Math.min(v.width / (this.letters.length + 1), v.height / 3)
-    const stepX = this.getView().clientWidth / this.letters.length
-    const stepY = this.getView().clientHeight / this.letters.length
-    for (let i = 0; i < this.letters.length; i++) {
-      const x = (i + 0.1) * stepX
-      const y = (i + 0.1) * stepY
-      this.placeLetter(this.letters[i], x, y)
-    }
-    this.rearrange(this.letters[0])
-    return this
   }
 
   arrangeCircle() {
@@ -174,19 +160,19 @@ export class WordMixView extends Viewable implements Action, View {
     if (readable) {
       const solution = this.letters.map((l) => l.getAttribute('data')).join('')
       console.log(solution)
-      if (solution === this.word!.mix) this.fireAction({ type: ActionType.SUCCESS })
+      if (solution === this.word!) this.fireAction({ type: ActionType.SUCCESS })
     }
   }
 
   showHint() {
     if (!this.word) return
-    if (this.hintsGiven++ > 2) {
+    if (++this.hintsGiven === this.word.length) {
       this.fireAction({ type: ActionType.FAIL })
       return
     }
     const vrect = this.getView().getBoundingClientRect()
     for (let h = 0; h < this.hintsGiven; h++) {
-      const letter = this.word.mix[h]
+      const letter = this.word[h]
       if (!this.letterMap[letter] || this.letterMap[letter].length < 1) return
       const image = this.letterMap[letter].shift()!
       this.letterMap[letter].push(image)
@@ -211,10 +197,9 @@ export class WordMixView extends Viewable implements Action, View {
 
   render(model: Model) {
     // @ts-expect-error
-    const history = (model as WordMixModel).history
-    this.word = history[history.length - 1]
+    this.word = (model as WordMixModel).word
     this.letterMap = {}
-    this.letters = this.word.mix.split('').map(
+    this.letters = this.word!.split('').map(
       (c) =>
         addEvents(this.createBlock(c), {
           mousedown: (e) => {

@@ -35,6 +35,7 @@
 
 @media (orientation: landscape) {
   .wordmix-view img {
+    max-width: 30vh;
     max-height: 30vh;
   }
 }
@@ -42,5 +43,6 @@
 @media (orientation: portrait) {
   .wordmix-view img {
     max-width: 30vw;
+    max-height: 30vw;
   }
 }

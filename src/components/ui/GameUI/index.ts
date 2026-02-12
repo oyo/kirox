@@ -28,8 +28,8 @@ export class GameUI extends Viewable implements Action {
       [
         show & Show.UNDO ? Undo(this.handleUndo.bind(this)) : '',
         show & Show.RESET ? Reset(this.handleReset.bind(this)) : '',
-        show & Show.HINT ? Hint(this.handleHint.bind(this)) : '',
         show & Show.REDO ? Redo(this.handleRedo.bind(this)) : '',
+        show & Show.HINT ? Hint(this.handleHint.bind(this)) : '',
         show & Show.HOME ? Home(this.handleHome.bind(this)) : '',
       ],
       { class: 'ui' }

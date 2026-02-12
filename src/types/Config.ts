@@ -16,10 +16,6 @@ const pages: Record<string, AppType> = {
   home: {
     run: () => new Home(),
   },
-  MineSweeper: {
-    run: () => new MineSweeper(),
-    preview: () => new MineSweeperPreview(),
-  },
   same: {
     run: () => new Same(),
     preview: () => new SamePreview(),
@@ -27,6 +23,10 @@ const pages: Record<string, AppType> = {
   wordmix: {
     run: () => new WordMix(),
     preview: () => new WordMixPreview(),
+  },
+  minesweeper: {
+    run: () => new MineSweeper(),
+    preview: () => new MineSweeperPreview(),
   },
   //  klondike: {
   //    run: () => new Klondike(),

@@ -31,6 +31,7 @@ export class MineSweeper extends Viewable implements ModelListener, ActionListen
 
   modelFinished(_: Model, status: number) {
     Overlay.showFinished(status)
+    setTimeout(() => this.model.reset(), 1500)
   }
 
   action(detail: ActionDetail) {
