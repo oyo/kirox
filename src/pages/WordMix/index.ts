@@ -15,7 +15,7 @@ import { plain, uniq } from 'util/words'
 
 const OWN_DATA = 'data/lang/de.json'
 const REMOTE_1 =
-  'https://raw.githubuserontent.com/cpos/AlleDeutschenWoerter/refs/heads/main/Substantive/substantiv_singular_alle.txt'
+  'https://raw.githubusercontent.com/cpos/AlleDeutschenWoerter/refs/heads/main/Substantive/substantiv_singular_alle.txt'
 
 export class WordMix extends Viewable implements ModelListener, ActionListener {
   protected model: WordMixModel
