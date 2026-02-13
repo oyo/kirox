@@ -1,7 +1,7 @@
 import type { Model, ModelListener } from 'types/events'
-import { groupByLength, noUmlaut, replaceUmlaut, upper } from 'util/words'
+import { groupByLength, noUmlaut, upper } from 'util/words'
 
-const MAX_LENGTH = 25
+const MAX_LENGTH = 32
 
 export class WordMixModel implements Model {
   listener: ModelListener[] = []
@@ -35,14 +35,15 @@ export class WordMixModel implements Model {
     let nextGroup
     do {
       nextGroup = this.words[this.length++]
-    } while (nextGroup.length === 0 && this.length < MAX_LENGTH)
-    this.word = nextGroup[~~(Math.random() * nextGroup.length)]
+    } while (!nextGroup && this.length < MAX_LENGTH)
     if (this.length === MAX_LENGTH) {
       this.fireModelFinished(0)
       setTimeout(this.start.bind(this), 1000)
       return
+    } else {
+      this.word = nextGroup[~~(Math.random() * nextGroup.length)]
+      this.fireModelChanged()
     }
-    this.fireModelChanged()
   }
 
   addModelListener(l: ModelListener) {

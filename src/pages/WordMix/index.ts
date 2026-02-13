@@ -13,9 +13,7 @@ import { Overlay } from 'components/ui/Overlay'
 import type { WordData } from 'types/words'
 import { plain, uniq } from 'util/words'
 
-const OWN_DATA = 'data/lang/de.json'
-const REMOTE_1 =
-  'https://raw.githubusercontent.com/cpos/AlleDeutschenWoerter/refs/heads/main/Substantive/substantiv_singular_alle.txt'
+const OWN_DATA = 'data/lang/de/nouns.json'
 
 export class WordMix extends Viewable implements ModelListener, ActionListener {
   protected model: WordMixModel
@@ -34,19 +32,10 @@ export class WordMix extends Viewable implements ModelListener, ActionListener {
   }
 
   async loadData() {
-    let words: string[]
-    {
-      const response = await fetch(OWN_DATA)
-      const data = (await response.json()) as WordData[]
-      words = plain(data.map((w) => w[1] as string))
-    }
-    try {
-      const response = await fetch(REMOTE_1)
-      words = words.concat((await response.text()).split('\n'))
-    } catch (_) {
-      // ignore
-    }
-    this.model.setWords(uniq(words))
+    const response = await fetch(OWN_DATA)
+    const data = (await response.json()) as WordData[]
+    const words = uniq(plain(data.map((w) => w[1] as string)))
+    this.model.setWords(words)
   }
 
   modelChanged(model: Model) {

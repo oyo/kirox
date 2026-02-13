@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-
-import nouns from '../../public/data/lang/de.json' with { type: 'json' }
+import { groupByLength } from '../util/words.ts'
+import nouns from '../../public/data/lang/de/nouns.json' with { type: 'json' }
 
 const URL = 'https://de.wiktionary.org/wiki/'
 
@@ -29,10 +29,10 @@ const query = async (items) => {
 
 const sort = (words) =>
   words.sort((a, b) => a[1].replace(/\./g, '').localeCompare(b[1].replace(/\./g, '')))
-const sortLength = (words) => words.sort((a, b) => b[1].length - a[1].length)
+//const sortLength = (words) => words.sort((a, b) => b[1].length - a[1].length)
 const uniq = (words) => [...new Set(words.map(JSON.stringify))].map(JSON.parse)
 const plain = (words) => words.map((w) => w[1].replace(/\./g, ''))
-const upper = (words) => words.map((w) => w[1].toLocaleUpperCase())
-const noUmlaut = (words) => words.filter((w) => w[1].match(/^[A-Z]+$/i))
+//const upper = (words) => words.map((w) => w[1].toLocaleUpperCase())
+//const noUmlaut = (words) => words.filter((w) => w[1].match(/^[A-Z]+$/i))
 
-console.log(plain(nouns))
+console.log(groupByLength(plain(nouns)))
