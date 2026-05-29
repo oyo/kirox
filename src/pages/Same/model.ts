@@ -1,10 +1,4 @@
-import {
-  NONE,
-  type Coord,
-  type Grid,
-  type GridItem,
-  type NumberGridDefinition,
-} from 'types/grid'
+import { NONE, type Coord, type Grid, type GridItem, type NumberGridDefinition } from '@/types/grid'
 import {
   copy,
   createNumberGrid,
@@ -13,8 +7,8 @@ import {
   getItemAt,
   replaceItems,
   transpose,
-} from 'util/grid'
-import type { Model, ModelListener } from 'types/events'
+} from '@/util/grid'
+import type { Model, ModelListener } from '@/types/events'
 
 export class SameModel implements Model {
   definition: NumberGridDefinition | string

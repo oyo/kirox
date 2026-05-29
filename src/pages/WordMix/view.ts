@@ -1,4 +1,4 @@
-import { addEvents, N, Viewable } from 'util/ui'
+import { addEvents, N, Viewable } from '@/util/ui'
 import './style.css'
 import {
   ActionType,
@@ -7,11 +7,11 @@ import {
   type ActionListener,
   type Model,
   type View,
-} from 'types/events'
+} from '@/types/events'
 import type { WordMixModel } from './model'
-import { Image, LetterShape } from 'components/icons/Shapes'
-import type { Coord } from 'types/grid'
-import { shuffle } from 'util/basic'
+import { Image, LetterShape } from '@/components/icons/Shapes'
+import type { Coord } from '@/types/grid'
+import { shuffle } from '@/util/basic'
 
 export class WordMixView extends Viewable implements Action, View {
   listener: ActionListener[] = []
@@ -39,10 +39,6 @@ export class WordMixView extends Viewable implements Action, View {
   createBlock(char: string) {
     const img = Image(LetterShape(char[0]))
     img.setAttribute('data', char)
-    const letters = this.letterMap[char[0]]
-    if (!letters) {
-      letters
-    }
     return img
   }
 
@@ -144,8 +140,7 @@ export class WordMixView extends Viewable implements Action, View {
   orderAndCheck() {
     this.letters = this.letters.sort(
       (a, b) =>
-        parseFloat(a.style.left.replace(/px;?/, '')) -
-        parseFloat(b.style.left.replace(/px;?/, ''))
+        parseFloat(a.style.left.replace(/px;?/, '')) - parseFloat(b.style.left.replace(/px;?/, '')),
     )
     const bound = this.letters.map((l) => l.getBoundingClientRect())
     const readable = bound.reduce(
@@ -155,7 +150,7 @@ export class WordMixView extends Viewable implements Action, View {
           : a &&
             c.left - bound[i - 1].left < 1.4 * c.width &&
             Math.abs(c.top - bound[i - 1].top) < 1.1 * c.height,
-      true
+      true,
     )
     if (readable) {
       const solution = this.letters.map((l) => l.getAttribute('data')).join('')
@@ -178,17 +173,9 @@ export class WordMixView extends Viewable implements Action, View {
       this.letterMap[letter].push(image)
       this.setLetterPosition(image, h * this.size, vrect.height / 2 - this.size / 2)
       this.autRearrange([image])
-      this.setLetterPosition(
-        image,
-        (h + 0.49) * this.size,
-        vrect.height / 2 - this.size / 2
-      )
+      this.setLetterPosition(image, (h + 0.49) * this.size, vrect.height / 2 - this.size / 2)
       this.autRearrange([image])
-      this.setLetterPosition(
-        image,
-        (h + 0.98) * this.size,
-        vrect.height / 2 - this.size / 2
-      )
+      this.setLetterPosition(image, (h + 0.98) * this.size, vrect.height / 2 - this.size / 2)
       this.autRearrange([image])
       this.setLetterPosition(image, h * this.size, vrect.height / 2 - this.size / 2)
       this.rearrange(image)
@@ -196,7 +183,6 @@ export class WordMixView extends Viewable implements Action, View {
   }
 
   render(model: Model) {
-    // @ts-expect-error
     this.word = (model as WordMixModel).word
     this.letterMap = {}
     this.letters = this.word!.split('').map(
@@ -214,7 +200,7 @@ export class WordMixView extends Viewable implements Action, View {
           touchend: () => {
             this.handleEnd()
           },
-        }) as HTMLImageElement
+        }) as HTMLImageElement,
     )
     this.letters = shuffle(this.letters)
     this.clear().append(this.letters)
@@ -224,7 +210,7 @@ export class WordMixView extends Viewable implements Action, View {
         ;(a[l] = a[l] ?? []).push(c)
         return a
       },
-      {} as Record<string, HTMLImageElement[]>
+      {} as Record<string, HTMLImageElement[]>,
     )
     this.hintsGiven = 0
     return this
@@ -250,11 +236,7 @@ export class WordMixView extends Viewable implements Action, View {
     e.preventDefault()
     if (!this.dragging) return
     if (this.previousPos)
-      this.moveLetter(
-        this.dragging,
-        e.clientX - this.previousPos.x,
-        e.clientY - this.previousPos.y
-      )
+      this.moveLetter(this.dragging, e.clientX - this.previousPos.x, e.clientY - this.previousPos.y)
     this.previousPos = { x: e.clientX, y: e.clientY }
   }
 
@@ -272,7 +254,7 @@ export class WordMixView extends Viewable implements Action, View {
       this.moveLetter(
         this.dragging,
         e.touches[0].pageX - this.previousPos.x,
-        e.touches[0].pageY - this.previousPos.y
+        e.touches[0].pageY - this.previousPos.y,
       )
     this.previousPos = { x: e.touches[0].pageX, y: e.touches[0].pageY }
   }

@@ -20,17 +20,17 @@ const queryOnline = async (noun) => {
   return noun
 }
 
-const query = async (items) => {
+export const query = async (items) => {
   for (let i = 0; i < items.length; i++) {
     await queryOnline(items[i])
     await sleep(500)
   }
 }
 
-const sort = (words) =>
-  words.sort((a, b) => a[1].replace(/\./g, '').localeCompare(b[1].replace(/\./g, '')))
+//const sort = (words) =>
+//  words.sort((a, b) => a[1].replace(/\./g, '').localeCompare(b[1].replace(/\./g, '')))
 //const sortLength = (words) => words.sort((a, b) => b[1].length - a[1].length)
-const uniq = (words) => [...new Set(words.map(JSON.stringify))].map(JSON.parse)
+//const uniq = (words) => [...new Set(words.map(JSON.stringify))].map(JSON.parse)
 const plain = (words) => words.map((w) => w[1].replace(/\./g, ''))
 //const upper = (words) => words.map((w) => w[1].toLocaleUpperCase())
 //const noUmlaut = (words) => words.filter((w) => w[1].match(/^[A-Z]+$/i))

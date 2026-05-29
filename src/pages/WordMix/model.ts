@@ -1,5 +1,5 @@
-import type { Model, ModelListener } from 'types/events'
-import { groupByLength, noUmlaut, upper } from 'util/words'
+import type { Model, ModelListener } from '@/types/events'
+import { groupByLength, noUmlaut, upper } from '@/util/words'
 
 const MAX_LENGTH = 32
 
@@ -31,6 +31,10 @@ export class WordMixModel implements Model {
     this.nextWord()
   }
 
+  redo() {
+    // not implemented
+  }
+
   nextWord() {
     let nextGroup
     do {
@@ -48,14 +52,14 @@ export class WordMixModel implements Model {
 
   addModelListener(l: ModelListener) {
     this.listener.push(l)
-    return this
+    return this as unknown as Model
   }
 
   fireModelChanged() {
-    this.listener.forEach((l) => l.modelChanged(this))
+    this.listener.forEach((l) => l.modelChanged(this as unknown as Model))
   }
 
   fireModelFinished(status: number) {
-    this.listener.forEach((l) => l.modelFinished(this, status))
+    this.listener.forEach((l) => l.modelFinished(this as unknown as Model, status))
   }
 }

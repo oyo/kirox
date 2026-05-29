@@ -2,44 +2,33 @@
   "name": "kirox",
   "version": "0.0.13",
   "description": "A collection of free web based games, puzzles and apps",
-  "author": "Martin Rohrmeier <roryphant@gmail.com> (oyo)",
+  "keywords": [
+    "free",
+    "games",
+    "javascript",
+    "kids",
+    "learning",
+    "online",
+    "puzzles",
+    "typescript"
+  ],
   "license": "MIT",
-  "type": "module",
+  "author": "Martin Rohrmeier <roryphant@gmail.com> (oyo)",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/oyo/kirox.git"
   },
-  "keywords": [
-    "free",
-    "online",
-    "games",
-    "puzzles",
-    "kids",
-    "learning",
-    "typescript",
-    "javascript",
-    "kids"
-  ],
-  "devDependencies": {
-    "husky": ">=7",
-    "lint-staged": "^16.2.7",
-    "prettier": "^3.8.1",
-    "typescript": "~5.9.3",
-    "vite": "^7.2.4",
-    "vite-tsconfig-paths": "^6.0.5",
-    "vitest": "^4.0.18"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,css,md,json,xml,yml,yaml,html}": [
-      "prettier --write"
-    ]
-  },
+  "type": "module",
   "scripts": {
-    "prepare": "husky",
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "pretty": "prettier . --write",
-    "test": "vitest"
-  }
+    "dev": "vp dev",
+    "build": "tsc && vp build",
+    "preview": "vp preview",
+    "prepare": "vp config"
+  },
+  "devDependencies": {
+    "typescript": "~6.0.3",
+    "vite": "npm:@voidzero-dev/vite-plus-core@^0.1.22",
+    "vite-plus": "catalog:"
+  },
+  "packageManager": "pnpm@11.4.0"
 }

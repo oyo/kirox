@@ -1,5 +1,5 @@
-import { Fail, Success } from 'components/icons/Shapes'
-import { clear, N, Viewable } from 'util/ui'
+import { Fail, Success } from '@/components/icons/Shapes'
+import { clear, N, Viewable } from '@/util/ui'
 import './style.css'
 
 export class Overlay extends Viewable {
@@ -20,7 +20,7 @@ export class Overlay extends Viewable {
     setTimeout(() => {
       try {
         app.removeChild(v)
-      } catch (_) {
+      } catch {
         // ignore
       }
     }, 480)

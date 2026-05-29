@@ -3,10 +3,10 @@ import block from './svg/block.svg'
 import shapeblock from './svg/shapeblock.svg'
 import shapeletter from './svg/shapeletter.svg'
 import shapeplain from './svg/shapeplain.svg'
-import Config from 'types/Config'
-import { addEvents, N } from 'util/ui'
+import Config from '@/types/Config'
+import { addEvents, N } from '@/util/ui'
 import { ShapePath } from './ShapePath'
-import { svgDecode, svgEncode } from 'util/image'
+import { svgDecode, svgEncode } from '@/util/image'
 
 const BASE_COLOR = '808080'
 const BASE_PATH = 'M25,5l20,40l-40,0z'
@@ -23,8 +23,8 @@ export const Combine = (icon1: string, icon2: string) =>
       /<\/svg>/,
       svgDecode(icon2)
         .replace('\n', ' ')
-        .replace(/^.*<defs/, '<defs')
-    )
+        .replace(/^.*<defs/, '<defs'),
+    ),
   )
 
 export const Shape = (path: string, col?: string) =>
@@ -40,8 +40,8 @@ export const LetterShape = (letter: string, col?: Array<Array<string>>) =>
       svgDecode(shapeletter)
         .replace('>A<', `>&#x${letter.charCodeAt(0).toString(16)};<`)
         .replace('dddd44', col && col[1] ? col[1][0] : 'dddd44')
-        .replace('ffffcc', col && col[1] ? col[1][1] : 'ffffcc')
-    )
+        .replace('ffffcc', col && col[1] ? col[1][1] : 'ffffcc'),
+    ),
   )
 
 export const Image = (shape: string): HTMLImageElement =>
@@ -50,16 +50,11 @@ export const Image = (shape: string): HTMLImageElement =>
 export const Button = (image: HTMLImageElement | SVGElement, click: () => void) =>
   addEvents(image, { click })
 
-export const Home = (click: () => void) =>
-  Button(Image(BlockShape(ShapePath.HOME)), click)
-export const Reset = (click: () => void) =>
-  Button(Image(BlockShape(ShapePath.RESET)), click)
-export const Undo = (click: () => void) =>
-  Button(Image(BlockShape(ShapePath.UNDO)), click)
-export const Redo = (click: () => void) =>
-  Button(Image(BlockShape(ShapePath.REDO)), click)
-export const Hint = (click: () => void) =>
-  Button(Image(BlockShape(ShapePath.HINT)), click)
+export const Home = (click: () => void) => Button(Image(BlockShape(ShapePath.HOME)), click)
+export const Reset = (click: () => void) => Button(Image(BlockShape(ShapePath.RESET)), click)
+export const Undo = (click: () => void) => Button(Image(BlockShape(ShapePath.UNDO)), click)
+export const Redo = (click: () => void) => Button(Image(BlockShape(ShapePath.REDO)), click)
+export const Hint = (click: () => void) => Button(Image(BlockShape(ShapePath.HINT)), click)
 export const Boom = (click: () => void) =>
   Button(Image(BlockShape(ShapePath.BOOM, Config.COLOR.BLACK)), click)
 

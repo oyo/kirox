@@ -1,9 +1,9 @@
-import { CardSuitName, CardValueName } from 'types/cards'
+import { CardSuitName, CardValueName } from '@/types/cards'
 
 export const deck = () =>
-  new Array(CardSuitName.length - 1).fill(undefined).map((_, s) =>
-    new Array(CardValueName.length - 1).fill(undefined).map((_, v) => ({
+  Array.from({ length: CardSuitName.length - 1 }, (_, s) =>
+    Array.from({ length: CardValueName.length - 1 }, (_, v) => ({
       suit: s + 1,
       value: v + 1,
-    }))
+    })),
   )

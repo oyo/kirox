@@ -1,5 +1,5 @@
-import { addEvents, json, N, Viewable } from 'util/ui'
-import { Block, BlockShape, LetterShape } from 'components/icons/Shapes'
+import { addEvents, json, N, Viewable } from '@/util/ui'
+import { Block, BlockShape, LetterShape } from '@/components/icons/Shapes'
 import './style.css'
 import {
   ActionType,
@@ -8,11 +8,11 @@ import {
   type ActionListener,
   type Model,
   type View,
-} from 'types/events'
+} from '@/types/events'
 import type { MineSweeperModel } from './model'
-import Config from 'types/Config'
-import type { GridItem } from 'types/grid'
-import { ShapePath } from 'components/icons/ShapePath'
+import Config from '@/types/Config'
+import type { GridItem } from '@/types/grid'
+import { ShapePath } from '@/components/icons/ShapePath'
 
 export class MineSweeperView extends Viewable implements Action, View {
   listener: ActionListener[] = []
@@ -53,14 +53,14 @@ export class MineSweeperView extends Viewable implements Action, View {
               }),
               {
                 click: this.handleTap.bind(this),
-              }
-            )
+              },
+            ),
           ),
           {
             class: 'column',
-          }
-        )
-      )
+          },
+        ),
+      ),
     )
     return this
   }

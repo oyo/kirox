@@ -3,18 +3,17 @@ const domItem = (p: any) => (p.hasOwnProperty('view') ? p.view : p)
 export const isJSON = (o: any) => {
   try {
     return JSON.parse(o)
-  } catch (_) {
+  } catch {
     return false
   }
 }
 
-export const json = (o: any) => {
+export const json = (o: any): string => {
   try {
     return JSON.stringify(o, null, 2)
   } catch (e) {
-    return e
+    return e as string
   }
-  return o
 }
 
 export const append = (n: Element, c: any) => {
@@ -40,9 +39,9 @@ export const append = (n: Element, c: any) => {
           }
           throw {}
       }
-    } catch (e) {
+    } catch {
       const pre = document.createElement('pre')
-      pre.appendChild(document.createTextNode(json(cn) ?? String(cn)))
+      pre.appendChild(document.createTextNode((json(cn) as string) ?? String(cn)))
       n.appendChild(pre)
     }
   }
@@ -60,7 +59,7 @@ export const remove = (n: Element) => {
   if (!n.parentElement) return
   try {
     n.parentElement.removeChild(n)
-  } catch (_) {
+  } catch {
     // ignore
   }
 }
@@ -77,11 +76,14 @@ export const addEvents = (node: Element, evts: Record<string, (e: Event) => void
   return node
 }
 
-export function debounce(func: any, timeout = 250) {
-  let timer: number
-  return (...args: any[]) => {
-    clearTimeout(timer)
-    timer = setTimeout(() => func.apply(this, args), timeout)
+export const debounce = <T extends unknown[]>(callback: (...args: T) => void, delay: number) => {
+  let timeoutTimer: ReturnType<typeof setTimeout>
+
+  return (...args: T) => {
+    clearTimeout(timeoutTimer)
+    timeoutTimer = setTimeout(() => {
+      callback(...args)
+    }, delay)
   }
 }
 
@@ -114,6 +116,7 @@ export abstract class Viewable {
   }
 
   remove(child?: Element | Viewable) {
-    child ? remove(domItem(child)) : remove(this.getView())
+    if (child) remove(domItem(child))
+    else remove(this.getView())
   }
 }

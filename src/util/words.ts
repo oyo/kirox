@@ -1,4 +1,4 @@
-import type { Word, WordData } from 'types/words'
+import type { Word, WordData } from '@/types/words'
 
 const umlMap: Record<string, string> = {
   '\u00dc': 'UE',
@@ -19,7 +19,7 @@ export const count = (words: string[]): Record<string, number> =>
       ...a,
       [c]: (a[c] || 0) + 1,
     }),
-    {} as Record<string, number>
+    {} as Record<string, number>,
   )
 
 export const uniq = (words: string[]) => [...new Set(words)]
@@ -29,10 +29,7 @@ export const noUmlaut = (words: string[]) => words.filter((w) => w.match(/^[A-Z]
 
 export const sortLength = (words: string[]) => words.sort((a, b) => b.length - a.length)
 export const groupByLength = (words: string[]): Record<number, string[]> =>
-  words.reduce(
-    (a, c) => ((a[c.length] ??= []).push(c), a),
-    {} as Record<number, string[]>
-  )
+  words.reduce((a, c) => ((a[c.length] ??= []).push(c), a), {} as Record<number, string[]>)
 
 export const replaceUmlaut = (word: string) =>
   word

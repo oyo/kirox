@@ -1,4 +1,4 @@
-import { N, Viewable } from 'util/ui'
+import { N, Viewable } from '@/util/ui'
 import './style.css'
 
 class AppSingle extends Viewable {

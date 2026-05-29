@@ -6,12 +6,12 @@ import {
   type ActionListener,
   type Model,
   type ModelListener,
-} from 'types/events'
+} from '@/types/events'
 import { GameUI, Show } from '../../components/ui/GameUI'
-import { N, Viewable } from 'util/ui'
-import { Overlay } from 'components/ui/Overlay'
-import type { WordData } from 'types/words'
-import { plain, uniq } from 'util/words'
+import { N, Viewable } from '@/util/ui'
+import { Overlay } from '@/components/ui/Overlay'
+import type { WordData } from '@/types/words'
+import { plain, uniq } from '@/util/words'
 
 const OWN_DATA = 'data/lang/de/nouns.json'
 
@@ -27,8 +27,8 @@ export class WordMix extends Viewable implements ModelListener, ActionListener {
     this.ui = new GameUI(Show.UNDO | Show.REDO | Show.RESET | Show.HINT | Show.HOME)
       .addActionListener(this)
       .appendTo(this)
-    this.model = new WordMixModel().addModelListener(this)
-    this.loadData()
+    this.model = new WordMixModel().addModelListener(this) as unknown as WordMixModel
+    void this.loadData()
   }
 
   async loadData() {

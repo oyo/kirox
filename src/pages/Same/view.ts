@@ -1,5 +1,5 @@
-import { addEvents, json, N, Viewable } from 'util/ui'
-import { Block } from 'components/icons/Shapes'
+import { addEvents, json, N, Viewable } from '@/util/ui'
+import { Block } from '@/components/icons/Shapes'
 import './style.css'
 import {
   ActionType,
@@ -8,7 +8,7 @@ import {
   type ActionListener,
   type Model,
   type View,
-} from 'types/events'
+} from '@/types/events'
 import type { SameModel } from './model'
 
 const COLOR = {
@@ -20,14 +20,7 @@ const COLOR = {
   BROWN: ['803000', 'b06030'],
 }
 
-const colors = [
-  COLOR.GREEN,
-  COLOR.BLUE,
-  COLOR.YELLOW,
-  COLOR.RED,
-  COLOR.MAGENTA,
-  COLOR.BROWN,
-]
+const colors = [COLOR.GREEN, COLOR.BLUE, COLOR.YELLOW, COLOR.RED, COLOR.MAGENTA, COLOR.BROWN]
 
 export class SameView extends Viewable implements Action, View {
   listener: ActionListener[] = []
@@ -45,19 +38,19 @@ export class SameView extends Viewable implements Action, View {
           r.map((item) =>
             addEvents(
               N('img', undefined, {
-                coord: json(item.coord),
+                coord: json(item.coord) as string,
                 src: Block(colors[item.value]),
               }),
               {
                 click: this.handleTap.bind(this),
-              }
-            )
+              },
+            ),
           ),
           {
             class: 'column',
-          }
-        )
-      )
+          },
+        ),
+      ),
     )
     return this
   }

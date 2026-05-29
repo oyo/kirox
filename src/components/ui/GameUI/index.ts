@@ -1,14 +1,9 @@
-import { N, Viewable } from 'util/ui'
+import { N, Viewable } from '@/util/ui'
 import './style.css'
-import {
-  ActionType,
-  type Action,
-  type ActionDetail,
-  type ActionListener,
-} from 'types/events'
-import { Hint, Home, Redo, Reset, Undo } from 'components/icons/Shapes'
-import { App } from 'components/App'
-import Config from 'types/Config'
+import { ActionType, type Action, type ActionDetail, type ActionListener } from '@/types/events'
+import { Hint, Home, Redo, Reset, Undo } from '@/components/icons/Shapes'
+import { App } from '@/components/App'
+import Config from '@/types/Config'
 
 export const Show: Record<string, number> = {
   HOME: 1,
@@ -32,7 +27,7 @@ export class GameUI extends Viewable implements Action {
         show & Show.HINT ? Hint(this.handleHint.bind(this)) : '',
         show & Show.HOME ? Home(this.handleHome.bind(this)) : '',
       ],
-      { class: 'ui' }
+      { class: 'ui' },
     )
     this.listener = []
   }
@@ -65,7 +60,8 @@ export class GameUI extends Viewable implements Action {
     this.fireAction({
       type: ActionType.EXIT,
     })
-    Config.isApp ? App.show(Config.pages.home.run()) : location.replace('./')
+    if (Config.isApp) App.show(Config.pages.home.run())
+    else location.replace('./')
   }
 
   addActionListener(l: ActionListener) {

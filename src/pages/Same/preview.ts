@@ -1,6 +1,6 @@
 import { Same } from '.'
 import { SameModel } from './model'
-import { ActionType, type ActionDetail, type ModelListener } from 'types/events'
+import { ActionType, type ActionDetail, type ModelListener } from '@/types/events'
 
 export const previewGrid = `011210
 010022
@@ -56,7 +56,7 @@ export class SamePreview extends Same implements ModelListener {
   action(detail: ActionDetail) {
     switch (detail.type) {
       case ActionType.TAP:
-        detail.data && this.model.tap(detail.data)
+        if (detail.data) this.model.tap(detail.data)
         break
       case ActionType.RESET_APP:
         this.model.reset()

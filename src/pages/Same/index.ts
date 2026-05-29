@@ -1,4 +1,4 @@
-import type { NumberGridDefinition } from 'types/grid'
+import type { NumberGridDefinition } from '@/types/grid'
 import { SameModel } from './model'
 import { SameView } from './view'
 import {
@@ -7,10 +7,10 @@ import {
   type ActionListener,
   type Model,
   type ModelListener,
-} from 'types/events'
+} from '@/types/events'
 import { GameUI, Show } from '../../components/ui/GameUI'
-import { N, Viewable } from 'util/ui'
-import { Overlay } from 'components/ui/Overlay'
+import { N, Viewable } from '@/util/ui'
+import { Overlay } from '@/components/ui/Overlay'
 
 const DefaultDefinition = {
   size: { dx: 8, dy: 8 },
@@ -26,9 +26,7 @@ export class Same extends Viewable implements ModelListener, ActionListener {
     super()
     this.view = N('div', null, { class: 'same' })
     this.output = new SameView().addActionListener(this).appendTo(this)
-    this.ui = new GameUI(Show.UNDO | Show.RESET | Show.HOME)
-      .addActionListener(this)
-      .appendTo(this)
+    this.ui = new GameUI(Show.UNDO | Show.RESET | Show.HOME).addActionListener(this).appendTo(this)
     this.model = new SameModel(definition).addModelListener(this)
     this.model.reset()
   }
@@ -44,7 +42,7 @@ export class Same extends Viewable implements ModelListener, ActionListener {
   action(detail: ActionDetail) {
     switch (detail.type) {
       case ActionType.TAP:
-        detail.data && this.model.tap(detail.data)
+        if (detail.data) this.model.tap(detail.data)
         break
       case ActionType.UNDO:
         this.model.undo()

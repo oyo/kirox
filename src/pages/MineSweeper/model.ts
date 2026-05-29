@@ -1,4 +1,4 @@
-import { type Coord, type Grid, type GridDefinition, type GridItem } from 'types/grid'
+import { type Coord, type Grid, type GridDefinition, type GridItem } from '@/types/grid'
 import {
   countState,
   countValue,
@@ -6,8 +6,8 @@ import {
   createNumberGrid,
   getItemAt,
   transpose,
-} from 'util/grid'
-import type { Model, ModelListener } from 'types/events'
+} from '@/util/grid'
+import type { Model, ModelListener } from '@/types/events'
 
 export interface MineSweeperDefinition extends GridDefinition {
   mines: number

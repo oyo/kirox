@@ -1,5 +1,5 @@
-import { AppList } from 'components/ui/AppList'
-import { N, Viewable } from 'util/ui'
+import { AppList } from '@/components/ui/AppList'
+import { N, Viewable } from '@/util/ui'
 import './style.css'
 
 export class Home extends Viewable {

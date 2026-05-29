@@ -1,11 +1,11 @@
-import { Home } from 'pages/Home'
-import { Same } from 'pages/Same'
-import { SamePreview } from 'pages/Same/preview'
-import { WordMix } from 'pages/WordMix'
-import { WordMixPreview } from 'pages/WordMix/preview'
-import type { Viewable } from 'util/ui'
-import { MineSweeper } from 'pages/MineSweeper'
-import { MineSweeperPreview } from 'pages/MineSweeper/preview'
+import { Home } from '@/pages/Home'
+import { Same } from '@/pages/Same'
+import { SamePreview } from '@/pages/Same/preview'
+import { WordMix } from '@/pages/WordMix'
+import { WordMixPreview } from '@/pages/WordMix/preview'
+import type { Viewable } from '@/util/ui'
+import { MineSweeper } from '@/pages/MineSweeper'
+import { MineSweeperPreview } from '@/pages/MineSweeper/preview'
 
 type AppType = {
   run: () => Viewable

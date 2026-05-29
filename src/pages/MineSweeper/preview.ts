@@ -1,6 +1,6 @@
 import { MineSweeper } from '.'
 import { MineSweeperModel } from './model'
-import { ActionType, type ActionDetail, type ModelListener } from 'types/events'
+import { ActionType, type ActionDetail, type ModelListener } from '@/types/events'
 
 export const previewGrid = `000990
 000990
@@ -66,7 +66,7 @@ export class MineSweeperPreview extends MineSweeper implements ModelListener {
   action(detail: ActionDetail) {
     switch (detail.type) {
       case ActionType.TAP:
-        detail.data && this.model.tap(detail.data)
+        if (detail.data) this.model.tap(detail.data)
         break
       case ActionType.RESET_APP:
         this.model.reset()

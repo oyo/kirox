@@ -1,7 +1,7 @@
-import { type Card, CardValueName } from 'types/cards'
-import { N } from 'util/ui'
+import { type Card, CardValueName } from '@/types/cards'
+import { N } from '@/util/ui'
 import { SuitShape } from './SuitShape'
-import { svgEncode } from 'util/image'
+import { svgEncode } from '@/util/image'
 
 const W = 64
 const H = 100
@@ -91,33 +91,31 @@ export const CardShape = (card: Card, variant?: boolean): string =>
       '<use href="#c"/>',
       variant ? XCA : XC,
       variant ? YCA : YC,
-      0.15
+      0.15,
     )}${transform(val(card), W - XV, H - YV, 1)}${transform(
       '<use href="#c"/>',
       variant ? W - XCA : W - XC,
       variant ? H - YCA : H - YC,
-      0.15
+      0.15,
     )}${
       card.value > 10
         ? transform(val(card), X2, Y4, 5)
-        : C[card.value].map((c) => transform('<use href="#c"/>', c[0], c[1], 0.35))
+        : C[card.value].map((c) => transform('<use href="#c"/>', c[0], c[1], 0.35)).join('')
     }
-`
+`,
   )
 
 const createBackShape = (n: number): string =>
   CardBase(
-    new Array(n)
-      .fill('')
-      .map(
-        (_, i) =>
-          `<rect stroke="#0077aa" stroke-width=".5" fill="${i < n - 1 ? 'none' : '#0077aa'}"
+    Array.from(
+      { length: n },
+      (_, i) =>
+        `<rect stroke="#0077aa" stroke-width=".5" fill="${i < n - 1 ? 'none' : '#0077aa'}"
 x="${0.04 * W + (i * (0.4 * W)) / n}" y="${0.04 * H + (i * 0.4 * H) / n}"
 width="${W - 0.08 * W - (0.8 * i * W) / n}" height="${H - 0.08 * H - (0.8 * i * H) / n}"
 rx="${(W + H) / 1200}" ry="${(W + H) / 1200}"
-/>`
-      )
-      .join('')
+/>`,
+    ).join(''),
   )
 
 const createPlaceholderShape = (): string =>

@@ -6,10 +6,10 @@ import {
   type ActionListener,
   type Model,
   type ModelListener,
-} from 'types/events'
+} from '@/types/events'
 import { GameUI, Show } from '../../components/ui/GameUI'
-import { N, Viewable } from 'util/ui'
-import { Overlay } from 'components/ui/Overlay'
+import { N, Viewable } from '@/util/ui'
+import { Overlay } from '@/components/ui/Overlay'
 
 export class MineSweeper extends Viewable implements ModelListener, ActionListener {
   protected model: MineSweeperModel
@@ -37,7 +37,7 @@ export class MineSweeper extends Viewable implements ModelListener, ActionListen
   action(detail: ActionDetail) {
     switch (detail.type) {
       case ActionType.TAP:
-        detail.data && this.model.tap(detail.data)
+        if (detail.data) this.model.tap(detail.data)
         break
       case ActionType.UNDO:
         this.model.undo()
