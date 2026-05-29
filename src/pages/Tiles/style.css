@@ -24,7 +24,7 @@
 
   .tiles-view .row:nth-child(odd),
   .tiles-preview .row:nth-child(odd) {
-    margin-left: -6.7vw;
+    margin-left: -6.75vw;
   }
 
   .tiles-view img,
@@ -46,7 +46,7 @@
 
   .tiles-view .row:nth-child(odd),
   .tiles-preview .row:nth-child(odd) {
-    margin-left: -6.7vh;
+    margin-left: -6.75vh;
   }
 
   .tiles-view img,
