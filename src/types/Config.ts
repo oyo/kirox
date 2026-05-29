@@ -6,6 +6,8 @@ import { WordMixPreview } from '@/pages/WordMix/preview'
 import type { Viewable } from '@/util/ui'
 import { MineSweeper } from '@/pages/MineSweeper'
 import { MineSweeperPreview } from '@/pages/MineSweeper/preview'
+import { Tiles } from '@/pages/Tiles'
+import { TilesPreview } from '@/pages/Tiles/preview'
 
 type AppType = {
   run: () => Viewable
@@ -15,6 +17,10 @@ type AppType = {
 const pages: Record<string, AppType> = {
   home: {
     run: () => new Home(),
+  },
+  tiles: {
+    run: () => new Tiles(),
+    preview: () => new TilesPreview(),
   },
   same: {
     run: () => new Same(),
