@@ -17,6 +17,7 @@ export default defineConfig({
   fmt: {
     semi: false,
     singleQuote: true,
+    ignorePatterns: ['dist/**'],
   },
   lint: {
     jsPlugins: [{ name: 'vite-plus', specifier: 'vite-plus/oxlint-plugin' }],
