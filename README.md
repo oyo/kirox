@@ -30,9 +30,11 @@ https://github.com/oyo/kirox-app/releases/latest
 
 ### Local Setup
 
+Install [vite+](https://viteplus.dev/) then
+
 ```bash
-yarn
-yarn dev
+vp install
+vp dev
 # press o + enter
 ```
 
