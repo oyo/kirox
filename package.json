@@ -1,6 +1,6 @@
 {
   "name": "kirox",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "A collection of free web based games, puzzles and apps",
   "keywords": [
     "free",
@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "typescript": "~6.0.3",
-    "vite": "npm:@voidzero-dev/vite-plus-core@^0.1.22",
+    "vite": "npm:@voidzero-dev/vite-plus-core@^0.1.23",
     "vite-plus": "catalog:"
   },
   "packageManager": "pnpm@11.4.0"

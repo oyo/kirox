@@ -1,6 +1,5 @@
 .ui {
   position: fixed;
-  right: 0;
   display: flex;
 }
 
@@ -10,8 +9,12 @@
 
 @media (orientation: landscape) {
   .ui {
-    flex-direction: column;
+    margin-left: auto;
+    margin-right: 0;
+    right: 0;
     top: 0;
+    align-items: flex-end;
+    flex-direction: column;
   }
   .ui img {
     margin: 0.1vw;
@@ -22,8 +25,18 @@
 
 @media (orientation: portrait) {
   .ui {
+    align-items: flex-end;
     flex-direction: row;
+    right: 0;
     bottom: 0;
+  }
+  .ui.top {
+    align-items: flex-start;
+    flex-direction: row;
+    left: 0;
+    top: 0;
+    right: 100%;
+    bottom: 100%;
   }
   .ui img {
     margin: 0.1vh;

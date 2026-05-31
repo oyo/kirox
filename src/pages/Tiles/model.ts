@@ -1,24 +1,17 @@
-import { type Coord, type Grid, type NumberGridDefinition } from '@/types/grid'
-import { copy, createNumberGrid, createRandomNumberGrid, getItemAt, transpose } from '@/util/grid'
-import type { Model, ModelListener } from '@/types/events'
+import { type Coord, type Grid, type GridItem, type NumberGridDefinition } from '@/types/grid'
+import { createNumberGrid, createRandomNumberGrid, getItemAt, transpose } from '@/util/grid'
+import type { GridModel, GridModelListener, Model, ModelListener } from '@/types/events'
 
-export class TilesModel implements Model {
+export class TilesModel implements GridModel<number> {
   definition: NumberGridDefinition | string
   grid: Grid<number> = []
-  history: Grid<number>[] = []
-  listener: ModelListener[] = []
+  listener: GridModelListener<number>[] = []
 
   constructor(definition: NumberGridDefinition | string) {
     this.definition = definition
   }
 
-  store() {
-    if (this.grid.length > 0) this.history.push(copy(this.grid))
-    this.history = this.history.slice(-1000)
-  }
-
   reset() {
-    this.store()
     this.grid =
       typeof this.definition === 'string'
         ? transpose(createNumberGrid(this.definition as string))
@@ -28,9 +21,7 @@ export class TilesModel implements Model {
   }
 
   undo() {
-    if (this.history.length === 0) return
-    this.grid = this.history.pop()!
-    this.fireModelChanged()
+    // not implemented
   }
 
   redo() {
@@ -41,20 +32,28 @@ export class TilesModel implements Model {
     const g = this.grid
     const item = getItemAt(g, coord.y, coord.x)
     item.value = (item.value + 1) % 6
-    this.store()
-    this.fireModelChanged()
+    this.fireItemChanged(item)
   }
 
-  addModelListener(l: ModelListener) {
+  addModelListener(_l: ModelListener) {
+    // not implemented
+    return this as unknown as Model
+  }
+
+  addGridModelListener(l: GridModelListener<number>) {
     this.listener.push(l)
-    return this
+    return this as unknown as GridModel<number>
   }
 
   fireModelChanged() {
-    this.listener.forEach((l) => l.modelChanged(this))
+    this.listener.forEach((l) => l.modelChanged(this as unknown as Model))
   }
 
-  fireModelFinished(status: number) {
-    this.listener.forEach((l) => l.modelFinished(this, status))
+  fireItemChanged(item: GridItem<number>) {
+    this.listener.forEach((l) => l.itemChanged(this as unknown as GridModel<number>, item))
+  }
+
+  fireModelFinished(_status: number) {
+    // not implemented
   }
 }

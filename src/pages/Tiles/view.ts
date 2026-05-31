@@ -5,11 +5,13 @@ import {
   type Action,
   type ActionDetail,
   type ActionListener,
+  type GridModel,
   type Model,
   type View,
 } from '@/types/events'
 import type { TilesModel } from './model'
 import { HexTile } from '@/components/tiles/TileImage'
+import type { GridItem } from '@/types/grid'
 
 export class TilesView extends Viewable implements Action, View {
   listener: ActionListener[] = []
@@ -27,6 +29,7 @@ export class TilesView extends Viewable implements Action, View {
           r.map((item) =>
             addEvents(
               N('img', undefined, {
+                id: `i${item.coord.y}_${item.coord.x}`,
                 coord: json(item.coord),
                 src: HexTile(item.value),
               }),
@@ -42,6 +45,17 @@ export class TilesView extends Viewable implements Action, View {
       ),
     )
     return this
+  }
+
+  rotate(_model: GridModel<number>, item: GridItem<number>) {
+    const id = `i${item.coord.y}_${item.coord.x}`
+    const img = document.getElementById(id) as HTMLImageElement
+    if (!img) return
+    img.classList.add('rot')
+    setTimeout(() => {
+      img.classList.remove('rot')
+      img.setAttribute('src', HexTile(item.value))
+    }, 100)
   }
 
   handleTap(e: Event) {

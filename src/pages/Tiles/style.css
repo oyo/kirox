@@ -2,7 +2,6 @@
 .tiles-view {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 .tiles-view .row {
@@ -12,50 +11,36 @@
 }
 
 .tiles-preview {
-  max-height: 100%;
+  overflow: hidden;
+  height: 100%;
   border-radius: 2vw;
 }
 
-@media (orientation: landscape) {
-  .tiles-view .row,
-  .tiles-preview .row {
-    margin-top: -3.8vw;
-  }
-
-  .tiles-view .row:nth-child(odd),
-  .tiles-preview .row:nth-child(odd) {
-    margin-left: -6.75vw;
-  }
-
-  .tiles-view img,
-  .tiles-preview img {
-    margin-left: -1vw;
-    margin-right: -1vw;
-    min-width: 15.5vw;
-    min-height: 15.5vw;
-    max-width: 15.5vw;
-    max-height: 15.5vw;
-  }
+.tiles-view .row,
+.tiles-preview .row {
+  margin-top: -49.5px;
 }
 
-@media (orientation: portrait) {
-  .tiles-view .row,
-  .tiles-preview .row {
-    margin-top: -3.8vh;
-  }
+.tiles-view .row:nth-child(odd),
+.tiles-preview .row:nth-child(odd) {
+  margin-left: -87px;
+}
 
-  .tiles-view .row:nth-child(odd),
-  .tiles-preview .row:nth-child(odd) {
-    margin-left: -6.75vh;
-  }
+.tiles-view img,
+.tiles-preview img {
+  margin-left: -13px;
+  margin-right: -13px;
+}
 
-  .tiles-view img,
-  .tiles-preview img {
-    margin-left: -1vh;
-    margin-right: -1vh;
-    min-width: 15.5vh;
-    min-height: 15.5vh;
-    max-width: 15.5vh;
-    max-height: 15.5vh;
+img.rot {
+  animation: spin 0.1s linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(60deg);
   }
 }
