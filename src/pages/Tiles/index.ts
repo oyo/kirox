@@ -13,7 +13,7 @@ import { GameUI, Show } from '../../components/ui/GameUI'
 import { N, Viewable } from '@/util/ui'
 
 export const DefaultDefinition = {
-  size: { dx: 100, dy: 100 },
+  size: { dx: 40, dy: 40 },
   maxValue: 6,
 }
 

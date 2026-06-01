@@ -6,7 +6,7 @@ Targets mainly kids and casual users.
 https://oyo.github.io/kirox/
 
 There is an Android app to play mobile in full screen mode
-https://github.com/oyo/kirox-app/releases/latest
+https://github.com/oyo/kirox-app/
 
 ### Currently Available
 
