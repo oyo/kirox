@@ -10,10 +10,10 @@ https://github.com/oyo/kirox-app/
 
 ### Currently Available
 
-- [Tiles](https://oyo.github.io/kirox/?page=same) - inspired by [Tantrix](https://en.wikipedia.org/wiki/Tantrix)
+- [Tiles](https://oyo.github.io/kirox/?page=tiles) - inspired by [Tantrix](https://en.wikipedia.org/wiki/Tantrix)
 - [Same](https://oyo.github.io/kirox/?page=same) - inspired by [SameGame](https://en.wikipedia.org/wiki/SameGame)
 - [WordMix](https://oyo.github.io/kirox/?page=wordmix) - arrange letters of german words
-- [Minesweeper](https://oyo.github.io/kirox/?page=minesweeper) - another [classic Minesweeper](<https://en.wikipedia.org/wiki/Minesweeper_(video_game)>) clone
+- [Minesweeper](https://oyo.github.io/kirox/?page=minesweeper) - another clone of this [classic](<https://en.wikipedia.org/wiki/Minesweeper_(video_game)>) game
 
 ### WIP or Planned
 
