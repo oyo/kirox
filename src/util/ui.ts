@@ -1,3 +1,7 @@
+const nameMap: Record<string, string> = {
+  svg: 'http://www.w3.org/2000/svg',
+}
+
 const domItem = (p: any) => (p.hasOwnProperty('view') ? p.view : p)
 
 export const isJSON = (o: any) => {
@@ -49,7 +53,11 @@ export const append = (n: Element, c: any) => {
 }
 
 export const N = (tag: string, c?: any, att?: Record<string, string>) => {
-  const n = document.createElement(tag)
+  let n = undefined
+  if (tag.includes(':')) {
+    const [ns, t] = tag.split(':')
+    n = document.createElementNS(nameMap[ns], t)
+  } else n = document.createElement(tag)
   if (att) for (let a of Object.keys(att)) n.setAttribute(a, att[a])
   if (typeof c === 'undefined' || c === null) return n
   return append(n, c)

@@ -1,4 +1,4 @@
-import { addEvents, json, N, Viewable } from '@/util/ui'
+import { addEvents, N, Viewable } from '@/util/ui'
 import './style.css'
 import {
   ActionType,
@@ -10,11 +10,12 @@ import {
   type View,
 } from '@/types/events'
 import type { TilesModel } from './model'
-import { HexTile } from '@/components/tiles/TileImage'
 import type { GridItem } from '@/types/grid'
+import { HexTileView } from '@/components/tiles/HexTileView'
 
 export class TilesView extends Viewable implements Action, View {
   listener: ActionListener[] = []
+  tileMap: HexTileView[][] = []
 
   constructor() {
     super()
@@ -22,21 +23,15 @@ export class TilesView extends Viewable implements Action, View {
   }
 
   render(model: Model) {
+    this.tileMap = (model as TilesModel).grid.map((r) => r.map((item) => new HexTileView(item)))
     this.clear().append(
-      (model as TilesModel).grid.map((r) =>
+      this.tileMap.map((r) =>
         N(
           'div',
-          r.map((item) =>
-            addEvents(
-              N('img', undefined, {
-                id: `i${item.coord.y}_${item.coord.x}`,
-                coord: json(item.coord),
-                src: HexTile(item.value),
-              }),
-              {
-                click: this.handleTap.bind(this),
-              },
-            ),
+          r.map((tile) =>
+            addEvents(tile.getView(), {
+              click: this.handleTap.bind(this),
+            }),
           ),
           {
             class: 'row',
@@ -48,20 +43,28 @@ export class TilesView extends Viewable implements Action, View {
   }
 
   rotate(_model: GridModel<number>, item: GridItem<number>) {
-    const id = `i${item.coord.y}_${item.coord.x}`
-    const img = document.getElementById(id) as HTMLImageElement
-    if (!img) return
-    img.classList.add('rot')
+    const tile = this.tileMap[item.coord.y][item.coord.x]
+    const svg = tile.getView() as unknown as SVGSVGElement
+    if (!tile) return
+    svg.classList.add('rot')
     setTimeout(() => {
-      img.classList.remove('rot')
-      img.setAttribute('src', HexTile(item.value))
+      svg.classList.remove('rot')
+      tile.rotate()
     }, 100)
   }
 
   handleTap(e: Event) {
     this.fireAction({
       type: ActionType.TAP,
-      data: JSON.parse((e.target! as HTMLImageElement).getAttribute('coord') ?? ''),
+      data: (([y, x]: number[]) => ({
+        x,
+        y,
+      }))(
+        (e.currentTarget! as SVGSVGElement).id
+          .substring(1)
+          .split('_')
+          .map((n: string) => Number(n)),
+      ),
     })
   }
 

@@ -1,0 +1,37 @@
+.hexagon {
+  width: 200px;
+  height: 200px;
+}
+
+.hexagon.rot {
+  animation: rot 0.1s linear;
+}
+
+@keyframes rot {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(60deg);
+  }
+}
+
+.hexagon-shape {
+  fill: #808080;
+}
+
+.path-outer {
+  fill: none;
+  stroke: #000000;
+  stroke-width: 20;
+}
+
+.path-inner {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 17;
+}
+
+.path-inner:hover {
+  stroke: #00aaff;
+}

@@ -26,21 +26,10 @@
   margin-left: -87px;
 }
 
-.tiles-view img,
-.tiles-preview img {
+.tiles-view svg,
+.tiles-preview svg {
+  min-width: 200px;
+  min-height: 200px;
   margin-left: -13px;
   margin-right: -13px;
-}
-
-img.rot {
-  animation: spin 0.1s linear;
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(60deg);
-  }
 }
