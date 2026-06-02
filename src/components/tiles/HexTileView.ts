@@ -57,6 +57,7 @@ const getPathShape = (pathDef: string) => [
 export class HexTileView extends Viewable {
   shape: SVGGElement
   item: BoardTile
+  tile: SVGPathElement
   paths: SVGPathElement[]
   constructor(item: BoardTile) {
     super()
@@ -67,10 +68,10 @@ export class HexTileView extends Viewable {
       (this.shape = N(
         'svg:g',
         [
-          N('svg:path', undefined, {
+          (this.tile = N('svg:path', undefined, {
             class: 'hexagon-shape',
             d: PATH_HEXAGON,
-          }),
+          }) as SVGPathElement),
           ...paths,
         ].flat(),
         {
@@ -84,10 +85,12 @@ export class HexTileView extends Viewable {
       },
     )
     this.paths = paths.map((p) => p[1])
+    if (item.state.color) this.tile.classList.add(`c${item.state.color}`)
     this.paths.forEach((p, i) => p.classList.add(`c${item.state.pathColor![i]}`))
   }
 
   update() {
+    if (this.item.state.color) this.tile.classList.add(`c${this.item.state.color}`)
     this.paths.forEach((p, i) => p.classList.add(`c${this.item.state.pathColor![i]}`))
     this.view.classList.add('rot')
     setTimeout(() => {

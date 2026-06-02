@@ -1,7 +1,6 @@
 import { type Coord, type GridDefinition } from '@/types/grid'
 import type { Model, ModelListener } from '@/types/events'
 import {
-  BoardDefinition,
   HexTileDesigns,
   type BoardTile,
   type HexBoardModel,
@@ -62,9 +61,9 @@ export class TilesModel implements HexBoardModel {
       .filter(
         (c) =>
           c[1] >= 0 &&
-          c[1] < BoardDefinition.size.dy &&
+          c[1] < this.definition.size.dy &&
           c[2] >= 0 &&
-          c[2] < BoardDefinition.size.dx,
+          c[2] < this.definition.size.dx,
       )
       .map((cn) => ({
         o: cn[0],
@@ -88,8 +87,14 @@ export class TilesModel implements HexBoardModel {
 
   tap(pos: Coord) {
     const item = this.grid[pos.y][pos.x]
-    this.grid.forEach((row) => row.forEach((tile) => (tile.state.pathColor = [0, 0, 0])))
+    this.grid.forEach((row) =>
+      row.forEach((tile) => {
+        tile.state.color = 0
+        tile.state.pathColor = [0, 0, 0]
+      }),
+    )
     this.colorMix.clear()
+    item.state.color = 9
     item.state.pathColor = [1, 2, 3]
     item.state.rot = (item.state.rot + 1) % 6
     this.fireItemChanged(item)
