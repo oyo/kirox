@@ -1,6 +1,6 @@
 .hexagon {
-  width: 200px;
-  height: 200px;
+  width: 100px;
+  height: 100px;
 }
 
 .hexagon.rot {
@@ -39,8 +39,8 @@
   stroke: #0066ff;
 }
 .path-inner.c2 {
-  stroke: #ff4400;
+  stroke: #44ff00;
 }
 .path-inner.c3 {
-  stroke: #44ff00;
+  stroke: #ff4400;
 }

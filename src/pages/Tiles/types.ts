@@ -51,7 +51,7 @@ export const HexTileLLL = createHexTile([
   [2, 5],
 ])
 
-export const HexTileDesigns = [HexTileCDD]
+export const HexTileDesigns = [HexTileCCC, HexTileCDD, HexTileCLC, HexTileDLD, HexTileLLL]
 
 export type TileState = {
   pos: Coord
@@ -75,5 +75,5 @@ export interface HexBoardModelListener extends ModelListener {
 }
 
 export const BoardDefinition: GridDefinition = {
-  size: { dx: 10, dy: 10 },
+  size: { dx: 40, dy: 40 },
 }

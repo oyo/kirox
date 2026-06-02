@@ -2,7 +2,7 @@ import { N, Viewable } from '@/util/ui'
 import './style.css'
 import type { BoardTile } from '@/pages/Tiles/types'
 
-const E = 50.0 // hexagon edge length
+const E = 40.0 // hexagon edge length
 const E2 = 2 * E
 const E05 = 0.5 * E
 const E075 = 0.75 * E
