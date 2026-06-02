@@ -1,12 +1,28 @@
 import { Tiles } from '.'
 import { TilesModel } from './model'
 import { ActionType, type ActionDetail, type ModelListener } from '@/types/events'
-import type { HexBoardModelListener } from './types'
+import { PreviewDefinition, type HexBoardModelListener } from './types'
 
 const actions: ActionDetail[] = [
   {
     type: ActionType.TAP,
-    data: { x: 3, y: 2 },
+    data: { x: 3, y: 1 },
+  },
+  {
+    type: ActionType.TAP,
+    data: { x: 3, y: 1 },
+  },
+  {
+    type: ActionType.TAP,
+    data: { x: 3, y: 1 },
+  },
+  {
+    type: ActionType.TAP,
+    data: { x: 3, y: 1 },
+  },
+  {
+    type: ActionType.TAP,
+    data: { x: 3, y: 1 },
   },
   {
     type: ActionType.TAP,
@@ -22,43 +38,27 @@ const actions: ActionDetail[] = [
   },
   {
     type: ActionType.TAP,
-    data: { x: 3, y: 2 },
+    data: { x: 2, y: 2 },
   },
   {
     type: ActionType.TAP,
-    data: { x: 3, y: 3 },
+    data: { x: 2, y: 2 },
   },
   {
     type: ActionType.TAP,
-    data: { x: 3, y: 3 },
+    data: { x: 2, y: 2 },
   },
   {
     type: ActionType.TAP,
-    data: { x: 3, y: 3 },
+    data: { x: 2, y: 2 },
   },
   {
     type: ActionType.TAP,
-    data: { x: 2, y: 3 },
+    data: { x: 2, y: 2 },
   },
   {
     type: ActionType.TAP,
-    data: { x: 2, y: 3 },
-  },
-  {
-    type: ActionType.TAP,
-    data: { x: 2, y: 3 },
-  },
-  {
-    type: ActionType.TAP,
-    data: { x: 2, y: 3 },
-  },
-  {
-    type: ActionType.TAP,
-    data: { x: 2, y: 3 },
-  },
-  {
-    type: ActionType.TAP,
-    data: { x: 2, y: 3 },
+    data: { x: 2, y: 2 },
   },
   {
     type: ActionType.RESET_APP,
@@ -72,9 +72,9 @@ export class TilesPreview extends Tiles implements HexBoardModelListener {
     super()
     this.remove(this.ui)
     this.getView().classList.add('tiles-preview')
-    this.model = new TilesModel({
-      size: { dx: 10, dy: 9 },
-    }).addModelListener(this as ModelListener) as TilesModel
+    this.model = new TilesModel(PreviewDefinition).addModelListener(
+      this as ModelListener,
+    ) as TilesModel
     this.model.reset()
     this.play()
   }

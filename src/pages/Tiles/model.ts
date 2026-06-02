@@ -118,8 +118,8 @@ export class TilesModel implements HexBoardModel {
   }
 
   addModelListener(l: ModelListener) {
-    this.listener.push(l as unknown as HexBoardModelListener)
-    return this as unknown as Model
+    this.listener.push(l as HexBoardModelListener)
+    return this as Model
   }
 
   fireModelChanged() {

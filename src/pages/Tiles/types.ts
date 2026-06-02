@@ -1,6 +1,14 @@
 import type { Model, ModelListener } from '@/types/events'
 import type { Coord, GridDefinition } from '@/types/grid'
 
+export const BoardDefinition: GridDefinition = {
+  size: { dx: 40, dy: 40 },
+}
+
+export const PreviewDefinition: GridDefinition = {
+  size: { dx: 10, dy: 9 },
+}
+
 export type HexTileDesign = {
   connect: number[]
   paths: number[][]
@@ -72,8 +80,4 @@ export interface HexBoardModel extends Model {
 
 export interface HexBoardModelListener extends ModelListener {
   itemChanged: (model: HexBoardModel, item: BoardTile) => void
-}
-
-export const BoardDefinition: GridDefinition = {
-  size: { dx: 40, dy: 40 },
 }

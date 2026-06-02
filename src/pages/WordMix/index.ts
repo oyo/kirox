@@ -27,7 +27,7 @@ export class WordMix extends Viewable implements ModelListener, ActionListener {
     this.ui = new GameUI(Show.UNDO | Show.REDO | Show.RESET | Show.HINT | Show.HOME)
       .addActionListener(this)
       .appendTo(this)
-    this.model = new WordMixModel().addModelListener(this) as unknown as WordMixModel
+    this.model = new WordMixModel().addModelListener(this) as WordMixModel
     void this.loadData()
   }
 

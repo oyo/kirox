@@ -52,14 +52,14 @@ export class WordMixModel implements Model {
 
   addModelListener(l: ModelListener) {
     this.listener.push(l)
-    return this as unknown as Model
+    return this as Model
   }
 
   fireModelChanged() {
-    this.listener.forEach((l) => l.modelChanged(this as unknown as Model))
+    this.listener.forEach((l) => l.modelChanged(this as Model))
   }
 
   fireModelFinished(status: number) {
-    this.listener.forEach((l) => l.modelFinished(this as unknown as Model, status))
+    this.listener.forEach((l) => l.modelFinished(this as Model, status))
   }
 }
