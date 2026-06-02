@@ -32,6 +32,15 @@
   stroke-width: 17;
 }
 
-.path-inner:hover {
-  stroke: #00aaff;
+.path-inner.c0 {
+  stroke: #ffffff;
+}
+.path-inner.c1 {
+  stroke: #0066ff;
+}
+.path-inner.c2 {
+  stroke: #ff4400;
+}
+.path-inner.c3 {
+  stroke: #44ff00;
 }

@@ -5,13 +5,12 @@ import {
   type Action,
   type ActionDetail,
   type ActionListener,
-  type GridModel,
   type Model,
   type View,
 } from '@/types/events'
 import type { TilesModel } from './model'
-import type { GridItem } from '@/types/grid'
 import { HexTileView } from '@/components/tiles/HexTileView'
+import type { BoardTile, HexBoardModel } from './types'
 
 export class TilesView extends Viewable implements Action, View {
   listener: ActionListener[] = []
@@ -42,15 +41,8 @@ export class TilesView extends Viewable implements Action, View {
     return this
   }
 
-  rotate(_model: GridModel<number>, item: GridItem<number>) {
-    const tile = this.tileMap[item.coord.y][item.coord.x]
-    const svg = tile.getView() as unknown as SVGSVGElement
-    if (!tile) return
-    svg.classList.add('rot')
-    setTimeout(() => {
-      svg.classList.remove('rot')
-      tile.rotate()
-    }, 100)
+  update(_model: HexBoardModel, item: BoardTile) {
+    this.tileMap[item.state.pos.y][item.state.pos.x].update()
   }
 
   handleTap(e: Event) {

@@ -1,21 +1,16 @@
 import { Tiles } from '.'
 import { TilesModel } from './model'
-import {
-  ActionType,
-  type ActionDetail,
-  type GridModelListener,
-  type ModelListener,
-} from '@/types/events'
+import { ActionType, type ActionDetail, type ModelListener } from '@/types/events'
+import type { HexBoardModelListener } from './types'
 
-export class TilesPreview extends Tiles implements ModelListener {
+export class TilesPreview extends Tiles implements HexBoardModelListener {
   constructor() {
     super()
     this.remove(this.ui)
     this.getView().classList.add('tiles-preview')
     this.model = new TilesModel({
       size: { dx: 8, dy: 6 },
-      maxValue: 6,
-    }).addGridModelListener(this as unknown as GridModelListener<number>) as unknown as TilesModel
+    }).addModelListener(this as ModelListener) as TilesModel
     this.model.reset()
   }
 

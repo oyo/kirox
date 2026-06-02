@@ -1,5 +1,3 @@
-import type { GridItem } from './grid'
-
 export interface Model {
   reset: () => void
   undo: () => void
@@ -9,18 +7,9 @@ export interface Model {
   fireModelFinished: (status: number) => void
 }
 
-export interface GridModel<T> extends Model {
-  addGridModelListener: (listener: GridModelListener<T>) => GridModel<T>
-  fireItemChanged: (item: GridItem<T>) => void
-}
-
 export interface ModelListener {
   modelChanged: (model: Model) => void
   modelFinished: (model: Model, status: number) => void
-}
-
-export interface GridModelListener<T> extends ModelListener {
-  itemChanged: (model: GridModel<number>, item: GridItem<T>) => void
 }
 
 export interface ActionDetail {

@@ -1,36 +1,35 @@
-import type { GridItem, NumberGridDefinition } from '@/types/grid'
 import { TilesModel } from './model'
 import { TilesView } from './view'
 import {
   ActionType,
   type ActionDetail,
   type ActionListener,
-  type GridModel,
-  type GridModelListener,
   type Model,
+  type ModelListener,
 } from '@/types/events'
 import { GameUI, Show } from '../../components/ui/GameUI'
 import { N, Viewable } from '@/util/ui'
+import {
+  BoardDefinition,
+  type BoardTile,
+  type HexBoardModel,
+  type HexBoardModelListener,
+} from './types'
 
-export const DefaultDefinition = {
-  size: { dx: 40, dy: 40 },
-  maxValue: 6,
-}
-
-export class Tiles extends Viewable implements GridModelListener<number>, ActionListener {
+export class Tiles extends Viewable implements HexBoardModelListener, ActionListener {
   protected model: TilesModel
   protected output: TilesView
   protected ui: GameUI
 
-  constructor(definition: NumberGridDefinition = DefaultDefinition) {
+  constructor() {
     super()
     this.view = N('div', null, { class: 'tiles' })
     this.output = new TilesView().addActionListener(this).appendTo(this)
     this.ui = new GameUI(Show.RESET | Show.HOME).addActionListener(this).appendTo(this)
     this.ui.getView().classList.add('top')
-    this.model = new TilesModel(definition).addGridModelListener(
-      this as unknown as GridModelListener<number>,
-    ) as unknown as TilesModel
+    this.model = new TilesModel(BoardDefinition).addModelListener(
+      this as ModelListener,
+    ) as TilesModel
     this.model.reset()
   }
 
@@ -38,8 +37,8 @@ export class Tiles extends Viewable implements GridModelListener<number>, Action
     this.output.render(model)
   }
 
-  itemChanged(model: GridModel<number>, item: GridItem<number>) {
-    this.output.rotate(model, item)
+  itemChanged(model: HexBoardModel, item: BoardTile) {
+    this.output.update(model, item)
   }
 
   modelFinished(_: Model, _status: number) {
