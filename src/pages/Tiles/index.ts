@@ -25,7 +25,7 @@ export class Tiles extends Viewable implements HexBoardModelListener, ActionList
     super()
     this.view = N('div', null, { class: 'tiles' })
     this.output = new TilesView().addActionListener(this).appendTo(this)
-    this.ui = new GameUI(Show.RESET | Show.HOME).addActionListener(this).appendTo(this)
+    this.ui = new GameUI(Show.RESET | Show.REDO | Show.HOME).addActionListener(this).appendTo(this)
     this.ui.getView().classList.add('top')
     this.model = new TilesModel(BoardDefinition).addModelListener(
       this as ModelListener,
@@ -52,6 +52,9 @@ export class Tiles extends Viewable implements HexBoardModelListener, ActionList
         break
       case ActionType.RESET_APP:
         this.model.reset()
+        break
+      case ActionType.REDO:
+        this.model.redo()
         break
     }
   }

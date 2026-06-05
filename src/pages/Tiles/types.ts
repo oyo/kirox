@@ -10,7 +10,6 @@ export const PreviewDefinition: GridDefinition = {
 }
 
 export type HexTileDesign = {
-  connect: number[]
   paths: number[][]
   pathIndex: number[]
 }
@@ -20,11 +19,6 @@ const createHexTile = (paths: number[][]): HexTileDesign => ({
   pathIndex: paths.reduce((a, c, i) => {
     a[c[0]] = i
     a[c[1]] = i
-    return a
-  }, []),
-  connect: paths.reduce((a, c) => {
-    a[c[0]] = c[1]
-    a[c[1]] = c[0]
     return a
   }, []),
 })
@@ -60,6 +54,15 @@ export const HexTileLLL = createHexTile([
 ])
 
 export const HexTileDesigns = [HexTileCCC, HexTileCDD, HexTileCLC, HexTileDLD, HexTileLLL]
+
+export const NeighborOffsets = [0, 1].map((odd) => [
+  [-1, odd],
+  [0, 1],
+  [1, odd],
+  [1, odd - 1],
+  [0, -1],
+  [-1, odd - 1],
+])
 
 export type TileState = {
   pos: Coord

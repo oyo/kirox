@@ -6,38 +6,6 @@ import { PreviewDefinition, type HexBoardModelListener } from './types'
 const actions: ActionDetail[] = [
   {
     type: ActionType.TAP,
-    data: { x: 3, y: 1 },
-  },
-  {
-    type: ActionType.TAP,
-    data: { x: 3, y: 1 },
-  },
-  {
-    type: ActionType.TAP,
-    data: { x: 3, y: 1 },
-  },
-  {
-    type: ActionType.TAP,
-    data: { x: 3, y: 1 },
-  },
-  {
-    type: ActionType.TAP,
-    data: { x: 3, y: 1 },
-  },
-  {
-    type: ActionType.TAP,
-    data: { x: 3, y: 2 },
-  },
-  {
-    type: ActionType.TAP,
-    data: { x: 3, y: 2 },
-  },
-  {
-    type: ActionType.TAP,
-    data: { x: 3, y: 2 },
-  },
-  {
-    type: ActionType.TAP,
     data: { x: 2, y: 2 },
   },
   {
@@ -58,7 +26,39 @@ const actions: ActionDetail[] = [
   },
   {
     type: ActionType.TAP,
-    data: { x: 2, y: 2 },
+    data: { x: 1, y: 1 },
+  },
+  {
+    type: ActionType.TAP,
+    data: { x: 1, y: 1 },
+  },
+  {
+    type: ActionType.TAP,
+    data: { x: 1, y: 1 },
+  },
+  {
+    type: ActionType.TAP,
+    data: { x: 1, y: 1 },
+  },
+  {
+    type: ActionType.TAP,
+    data: { x: 1, y: 1 },
+  },
+  {
+    type: ActionType.TAP,
+    data: { x: 2, y: 1 },
+  },
+  {
+    type: ActionType.TAP,
+    data: { x: 2, y: 1 },
+  },
+  {
+    type: ActionType.TAP,
+    data: { x: 2, y: 1 },
+  },
+  {
+    type: ActionType.TAP,
+    data: { x: 2, y: 1 },
   },
   {
     type: ActionType.RESET_APP,
