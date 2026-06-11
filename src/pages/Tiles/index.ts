@@ -9,12 +9,7 @@ import {
 } from '@/types/events'
 import { GameUI, Show } from '../../components/ui/GameUI'
 import { N, Viewable } from '@/util/ui'
-import {
-  BoardDefinition,
-  type BoardTile,
-  type HexBoardModel,
-  type HexBoardModelListener,
-} from './types'
+import { type BoardTile, type HexBoardModel, type HexBoardModelListener } from './types'
 
 export class Tiles extends Viewable implements HexBoardModelListener, ActionListener {
   protected model: TilesModel
@@ -27,9 +22,9 @@ export class Tiles extends Viewable implements HexBoardModelListener, ActionList
     this.output = new TilesView().addActionListener(this).appendTo(this)
     this.ui = new GameUI(Show.RESET | Show.REDO | Show.HOME).addActionListener(this).appendTo(this)
     this.ui.getView().classList.add('top')
-    this.model = new TilesModel(BoardDefinition).addModelListener(
-      this as ModelListener,
-    ) as TilesModel
+    this.model = new TilesModel(
+      new URLSearchParams(location.search).get('tiles.pattern'),
+    ).addModelListener(this as ModelListener) as TilesModel
     this.model.reset()
   }
 

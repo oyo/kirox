@@ -1,6 +1,7 @@
 import { type Coord, type GridDefinition } from '@/types/grid'
 import type { Model, ModelListener } from '@/types/events'
 import {
+  codeToBoard,
   HexTileCCC,
   HexTileCDD,
   HexTileCLC,
@@ -23,17 +24,24 @@ const TileSets = [
 ]
 
 export class TilesModel implements HexBoardModel {
-  definition: GridDefinition
+  code: string
+  definition: GridDefinition = { size: { dx: 12, dy: 12 } }
   grid: BoardTile[][] = []
   listener: HexBoardModelListener[] = []
   colorMix: Set<string> = new Set()
   tileSet: number = 0
 
-  constructor(definition: GridDefinition) {
-    this.definition = definition
+  constructor(code?: string | null) {
+    this.code = code ?? '1ff1'
   }
 
   reset() {
+    if (this.code === '1ff1') this.setRandom()
+    else this.setPattern(this.code)
+  }
+
+  setRandom() {
+    this.definition = { size: { dx: 40, dy: 40 } }
     this.grid = Array.from({ length: this.definition.size.dy }, (_, y) =>
       Array.from({ length: this.definition.size.dx }, (_, x) => ({
         id: y * this.definition.size.dx + x,
@@ -47,6 +55,22 @@ export class TilesModel implements HexBoardModel {
     )
     this.fireModelChanged()
     return this.grid
+  }
+
+  setPattern(code: string) {
+    const pattern = codeToBoard(code)
+    this.definition.size = pattern.size
+    this.grid = pattern.grid
+    if (code[5]) {
+      this.resetColors()
+      const py = parseInt(code[6], 16)
+      const px = parseInt(code[7], 16)
+      const item = this.grid[py][px]
+      item.state.color = 9
+      item.state.pathColor = [1, 2, 3]
+      this.paintPaths(item)
+    } else this.fireModelChanged()
+    return this
   }
 
   undo() {

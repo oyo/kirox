@@ -1,7 +1,7 @@
 import { Tiles } from '.'
 import { TilesModel } from './model'
 import { ActionType, type ActionDetail, type ModelListener } from '@/types/events'
-import { PreviewDefinition, type HexBoardModelListener } from './types'
+import { type HexBoardModelListener } from './types'
 
 const actions: ActionDetail[] = [
   {
@@ -72,9 +72,7 @@ export class TilesPreview extends Tiles implements HexBoardModelListener {
     super()
     this.remove(this.ui)
     this.getView().classList.add('tiles-preview')
-    this.model = new TilesModel(PreviewDefinition).addModelListener(
-      this as ModelListener,
-    ) as TilesModel
+    this.model = new TilesModel().addModelListener(this as ModelListener) as TilesModel
     this.model.reset()
     this.play()
   }
