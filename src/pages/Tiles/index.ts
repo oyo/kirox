@@ -10,6 +10,7 @@ import {
 import { GameUI, Show } from '../../components/ui/GameUI'
 import { N, Viewable } from '@/util/ui'
 import { type BoardTile, type HexBoardModel, type HexBoardModelListener } from './types'
+import { stateToString } from './pattern'
 
 export class Tiles extends Viewable implements HexBoardModelListener, ActionListener {
   protected model: TilesModel
@@ -30,6 +31,9 @@ export class Tiles extends Viewable implements HexBoardModelListener, ActionList
 
   modelChanged(model: Model) {
     this.output.render(model)
+    const search = new URLSearchParams(location.search)
+    search.set('tiles.pattern', stateToString((model as TilesModel).state))
+    history.pushState(undefined, '', `${location.pathname}?${search.toString()}`)
   }
 
   itemChanged(model: HexBoardModel, item: BoardTile) {

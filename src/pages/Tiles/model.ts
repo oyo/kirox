@@ -1,91 +1,47 @@
-import { type Coord, type GridDefinition } from '@/types/grid'
+import { type Coord } from '@/types/grid'
 import type { Model, ModelListener } from '@/types/events'
 import {
-  codeToBoard,
-  HexTileCCC,
-  HexTileCDD,
-  HexTileCLC,
-  HexTileDesigns,
-  HexTileDLD,
-  HexTileLLL,
   NeighborOffsets,
+  TileSets,
+  type BoardState,
   type BoardTile,
   type HexBoardModel,
   type HexBoardModelListener,
 } from './types'
-
-const TileSets = [
-  [HexTileCDD],
-  [HexTileCCC],
-  [HexTileCLC],
-  [HexTileDLD],
-  [HexTileLLL],
-  HexTileDesigns,
-]
+import { headerToString, parseCode } from './pattern'
 
 export class TilesModel implements HexBoardModel {
-  code: string
-  definition: GridDefinition = { size: { dx: 12, dy: 12 } }
-  grid: BoardTile[][] = []
+  state: BoardState
   listener: HexBoardModelListener[] = []
   colorMix: Set<string> = new Set()
-  tileSet: number = 0
 
   constructor(code?: string | null) {
-    this.code = code ?? '1ff1'
+    this.state = parseCode(code ?? '00')
   }
 
   reset() {
-    if (this.code === '1ff1') this.setRandom()
-    else this.setPattern(this.code)
-  }
-
-  setRandom() {
-    this.definition = { size: { dx: 40, dy: 40 } }
-    this.grid = Array.from({ length: this.definition.size.dy }, (_, y) =>
-      Array.from({ length: this.definition.size.dx }, (_, x) => ({
-        id: y * this.definition.size.dx + x,
-        design: TileSets[this.tileSet][Math.floor(Math.random() * TileSets[this.tileSet].length)],
-        state: {
-          pos: { y, x },
-          rot: Math.floor(Math.random() * 6),
-          pathColor: [0, 0, 0],
-        },
-      })),
-    )
-    this.fireModelChanged()
-    return this.grid
-  }
-
-  setPattern(code: string) {
-    const pattern = codeToBoard(code)
-    this.definition.size = pattern.size
-    this.grid = pattern.grid
-    if (code[5]) {
-      this.resetColors()
-      const py = parseInt(code[6], 16)
-      const px = parseInt(code[7], 16)
-      const item = this.grid[py][px]
-      item.state.color = 9
-      item.state.pathColor = [1, 2, 3]
-      this.paintPaths(item)
+    this.state = parseCode(this.state.code)
+    const paint = this.state.paint
+    if (paint) {
+      paint.state.color = 9
+      paint.state.pathColor = [1, 2, 3]
+      this.paintPaths(paint)
     } else this.fireModelChanged()
-    return this
   }
 
   undo() {
-    this.tileSet = (this.tileSet + TileSets.length - 1) % TileSets.length
-    return this.reset()
+    // not implemented
   }
 
   redo() {
-    this.tileSet = (this.tileSet + 1) % TileSets.length
+    this.state.tileset = (this.state.tileset + 1) % (TileSets.length + 1)
+    this.state.code = headerToString(this.state)
     return this.reset()
   }
 
   resetColors() {
     this.colorMix.clear()
-    this.grid.forEach((row) =>
+    this.state.grid.forEach((row) =>
       row.forEach((tile) => {
         tile.state.color = 0
         tile.state.pathColor = [0, 0, 0]
@@ -101,15 +57,11 @@ export class TilesModel implements HexBoardModel {
     item.design.paths[pi]
       .map((q, i) => [i, p.y + o[(s.rot + q) % 6][0], p.x + o[(s.rot + q) % 6][1]])
       .filter(
-        (c) =>
-          c[1] >= 0 &&
-          c[1] < this.definition.size.dy &&
-          c[2] >= 0 &&
-          c[2] < this.definition.size.dx,
+        (c) => c[1] >= 0 && c[1] < this.state.size.dy && c[2] >= 0 && c[2] < this.state.size.dx,
       )
       .map((cn) => ({
         o: cn[0],
-        t: this.grid[cn[1]][cn[2]],
+        t: this.state.grid[cn[1]][cn[2]],
       }))
       .map((n) => ({
         ...n,
@@ -137,18 +89,20 @@ export class TilesModel implements HexBoardModel {
       repaint = (c: number) => (c === cm[1] ? cm[0] : c)
     }
     if (repaint)
-      this.grid.forEach((row) =>
+      this.state.grid.forEach((row) =>
         row.forEach((tile) => (tile.state.pathColor = tile.state.pathColor.map(repaint))),
       )
     setTimeout(this.fireModelChanged.bind(this), 120)
   }
 
   tap(pos: Coord) {
-    const item = this.grid[pos.y][pos.x]
+    const item = this.state.grid[pos.y][pos.x]
     this.resetColors()
     item.state.color = 9
     item.state.pathColor = [1, 2, 3]
     item.state.rot = (item.state.rot + 1) % 6
+    this.state.paint = item
+    console.log(item)
     this.fireItemChanged(item)
     this.paintPaths(item)
   }

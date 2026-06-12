@@ -11,6 +11,7 @@ import {
 import type { TilesModel } from './model'
 import { HexTileView } from '@/components/tiles/HexTileView'
 import type { BoardTile, HexBoardModel } from './types'
+import { MAX_BOARD_SIZE } from './pattern'
 
 export class TilesView extends Viewable implements Action, View {
   listener: ActionListener[] = []
@@ -22,7 +23,12 @@ export class TilesView extends Viewable implements Action, View {
   }
 
   render(model: Model) {
-    this.tileMap = (model as TilesModel).grid.map((r) => r.map((item) => new HexTileView(item)))
+    const state = (model as TilesModel).state
+    this.tileMap = Array.from({ length: MAX_BOARD_SIZE }).map((_, y) =>
+      Array.from({ length: MAX_BOARD_SIZE }).map(
+        (_, x) => new HexTileView(state.grid[y % state.size.dy][x % state.size.dx]),
+      ),
+    )
     this.clear().append(
       this.tileMap.map((r) =>
         N(
